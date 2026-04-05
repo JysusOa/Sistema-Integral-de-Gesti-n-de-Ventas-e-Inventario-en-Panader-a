@@ -1,0 +1,142 @@
+/* Contenedor principal con fondo y centrado */
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 64px); /* Ajustar si hay un header/toolbar */
+  background: linear-gradient(to bottom right, #f8f9fa, #e9ecef); /* Fondo degradado suave */
+  padding: 20px; /* Añadir padding para pantallas pequeñas */
+  box-sizing: border-box; /* Incluir padding en el tamaño total */
+}
+
+/* Tarjeta de registro */
+.register-card {
+  width: 100%;
+  max-width: 550px; /* Aumentar ligeramente el ancho máximo */
+  padding: 30px 40px; /* Más padding horizontal y vertical */
+  box-sizing: border-box;
+  text-align: center;
+  background-color: #ffffff; /* Fondo blanco puro */
+  border-radius: 12px; /* Bordes más redondeados */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Sombra más suave y moderna */
+  border: 1px solid #e0e0e0; /* Borde sutil */
+}
+
+/* Encabezado de la tarjeta */
+.register-card mat-card-title {
+  font-size: 2.2em; /* Título ligeramente más grande */
+  font-weight: 700;
+  color: #343a40; /* Color de texto más oscuro */
+  margin-bottom: 8px;
+}
+
+.welcome-text {
+  font-size: 1em;
+  color: #6c757d; /* Color de texto secundario */
+  margin-top: 0;
+  margin-bottom: 25px; /* Más espacio debajo del texto de bienvenida */
+}
+
+/* Formulario */
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px; /* Espacio consistente entre campos */
+}
+
+/* Campos de formulario */
+mat-form-field {
+  --mat-form-field-outline-color: #ced4da; /* Borde más neutro */
+  --mat-form-field-label-text-color: #495057; /* Color de etiqueta */
+  --mat-form-field-focus-state-color: #007bff; /* Color de enfoque */
+}
+
+.full-width {
+  width: 100%;
+}
+
+/* Mensajes de error */
+.error-message {
+  color: #dc3545; /* Rojo de Bootstrap */
+  background-color: #f8d7da; /* Fondo rojo claro */
+  border: 1px solid #f5c6cb;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  text-align: left;
+  font-weight: 500;
+  font-size: 0.9em;
+}
+
+/* Botón de enviar */
+button[type="submit"] {
+  height: 50px; /* Altura estándar */
+  font-size: 1.15em;
+  margin-top: 15px;
+  background-color: #007bff; /* Azul primario */
+  color: white;
+  font-weight: 600;
+  border-radius: 8px; /* Bordes redondeados */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2); /* Sombra sutil */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button[type="submit"]:hover:not(:disabled) {
+  background-color: #0056b3; /* Azul más oscuro al pasar el ratón */
+  box-shadow: 0 6px 15px rgba(0, 123, 255, 0.3);
+}
+
+button[type="submit"]:disabled {
+  background-color: #a0c7fa; /* Azul claro deshabilitado */
+  color: #e9ecef;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+/* Estilos para el spinner dentro del botón */
+mat-spinner {
+  margin: 0 auto;
+}
+
+/* Enlace de login */
+.login-link {
+  margin-top: 25px;
+  font-size: 0.95em;
+  color: #495057;
+}
+
+.login-link a {
+  color: #007bff; /* Azul primario */
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.login-link a:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+/* Media Queries para responsividad */
+@media (max-width: 600px) {
+  .register-card {
+    margin: 10px; /* Margen en pantallas pequeñas */
+    padding: 20px 25px;
+  }
+
+  .register-card mat-card-title {
+    font-size: 1.8em;
+  }
+
+  .welcome-text {
+    font-size: 0.9em;
+  }
+
+  button[type="submit"] {
+    font-size: 1em;
+    height: 45px;
+  }
+}

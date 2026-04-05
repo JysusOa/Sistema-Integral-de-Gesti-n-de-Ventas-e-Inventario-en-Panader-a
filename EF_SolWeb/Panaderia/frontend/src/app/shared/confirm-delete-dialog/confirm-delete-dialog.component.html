@@ -1,0 +1,41 @@
+<h2 mat-dialog-title class="dialog-title">
+  <mat-icon color="warn" class="title-icon">warning</mat-icon>
+  {{ data.title }}
+</h2>
+
+<mat-dialog-content class="dialog-content">
+  <div class="warning-container">
+    <mat-icon color="warn" class="warning-icon">error_outline</mat-icon>
+    <p class="main-message">{{ data.message }}</p>
+  </div>
+
+  <div *ngIf="data.itemName" class="item-details">
+    <div class="item-label">Nombre:</div>
+    <div class="item-value">{{ data.itemName }}</div>
+  </div>
+
+  <div *ngIf="data.itemType" class="item-details">
+    <div class="item-label">Tipo:</div>
+    <div class="item-value">{{ data.itemType | titlecase }}</div>
+  </div>
+
+  <div *ngIf="data.warning" class="additional-warning">
+    <mat-icon color="accent" class="info-icon">info</mat-icon>
+    <span>{{ data.warning }}</span>
+  </div>
+
+  <div class="final-warning">
+    <mat-icon color="warn" class="final-icon">priority_high</mat-icon>
+    <span>Esta acción no se puede deshacer.</span>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="dialog-actions">
+  <button mat-button (click)="onCancel()" class="cancel-button">
+    Cancelar
+  </button>
+  <button mat-raised-button color="warn" (click)="onConfirm()" class="confirm-button">
+    <mat-icon>delete</mat-icon>
+    Eliminar
+  </button>
+</mat-dialog-actions>

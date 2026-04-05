@@ -1,0 +1,182 @@
+.informes-container {
+  padding: 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+  background-color: #FAFAFA;
+  min-height: 100vh;
+}
+
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.header-section h1 {
+  color: #3E2723;
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.header-section p {
+  color: #795548;
+  margin-top: 5px;
+}
+
+.btn-new {
+  background-color: #3E2723 !important; /* Marrón oscuro */
+  color: #FFD700 !important; /* Dorado */
+  padding: 0 25px;
+  height: 48px;
+  font-weight: 600;
+}
+
+/* ============================
+   TARJETAS MODERNAS
+   ============================ */
+.reports-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 25px;
+}
+
+.report-card-modern {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  height: 200px; /* Altura fija para uniformidad */
+}
+
+.report-card-modern:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+/* Franja lateral de estado */
+.status-strip {
+  width: 6px;
+  height: 100%;
+  flex-shrink: 0;
+}
+
+.card-content {
+  padding: 20px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Colores dinámicos según estado */
+/* Aprobado (Verde) */
+.report-card-modern.aprobado .status-strip { background: #43A047; }
+.report-card-modern.aprobado .icon-box { background: #E8F5E9; color: #2E7D32; }
+.report-card-modern.aprobado .status-pill { background: #E8F5E9; color: #2E7D32; }
+
+/* Rechazado (Rojo) */
+.report-card-modern.rechazado .status-strip { background: #E53935; }
+.report-card-modern.rechazado .icon-box { background: #FFEBEE; color: #C62828; }
+.report-card-modern.rechazado .status-pill { background: #FFEBEE; color: #C62828; }
+
+/* Observado/Revision (Naranja) */
+.report-card-modern.observado .status-strip,
+.report-card-modern.revision .status-strip { background: #FB8C00; }
+
+.report-card-modern.observado .icon-box,
+.report-card-modern.revision .icon-box { background: #FFF3E0; color: #EF6C00; }
+
+.report-card-modern.observado .status-pill,
+.report-card-modern.revision .status-pill { background: #FFF3E0; color: #EF6C00; }
+
+/* Pendiente (Gris/Azul) */
+.report-card-modern.pendiente .status-strip { background: #757575; }
+.report-card-modern.pendiente .icon-box { background: #F5F5F5; color: #616161; }
+
+/* Estructura interna */
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.icon-box {
+  width: 45px;
+  height: 45px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-main h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #333;
+  margin: 15px 0 5px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.date-badge {
+  font-size: 0.85rem;
+  color: #90A4AE;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.date-badge mat-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.status-pill {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.view-text {
+  font-size: 0.85rem;
+  color: #BCAAA4;
+  font-weight: 500;
+}
+
+.delete-btn {
+  opacity: 0.3;
+  transition: opacity 0.2s;
+}
+.delete-btn:hover {
+  opacity: 1;
+  background-color: rgba(244, 67, 54, 0.1);
+}
+
+.empty-state {
+  text-align: center;
+  color: #BDBDBD;
+  margin-top: 50px;
+}
+
+.empty-state mat-icon {
+  font-size: 64px;
+  width: 64px;
+  height: 64px;
+}

@@ -1,0 +1,144 @@
+/* 🎨 --- CONTENEDOR PRINCIPAL --- */
+.list-card {
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 20px;
+  border-radius: 12px;
+  background-color: #FAF3E0; /* tono cálido */
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  font-family: 'Roboto', sans-serif;
+}
+
+/* --- HEADER (título y acciones) --- */
+mat-card-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: #5D4037;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 🔍 Input + botón en cabecera */
+.header-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.filter-field {
+  flex: 1;
+  min-width: 240px;
+}
+
+.add-button {
+  background: linear-gradient(135deg, #8B4513, #D2B48C);
+  color: #fff;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 25px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(139, 69, 19, 0.25);
+}
+.add-button:hover {
+  background: linear-gradient(135deg, #6F380F, #C19A6B);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 14px rgba(111, 56, 15, 0.4);
+}
+.add-button mat-icon {
+  font-size: 20px;
+  color: #fff;
+}
+
+/* --- TABLA --- */
+.table-container {
+  overflow-x: auto; /* scroll en pantallas chicas */
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Cabecera */
+table th {
+  background-color: #D7CCC8;
+  color: #3E2723;
+  font-weight: 600;
+  font-size: 15px;
+  padding: 12px;
+  text-align: left;
+}
+
+/* Celdas */
+table td {
+  font-size: 14px;
+  padding: 12px;
+  color: #4E342E;
+  border-bottom: 1px solid #E0E0E0;
+}
+
+/* Filas alternadas */
+table tr:nth-child(even) {
+  background-color: #FAF9F6;
+}
+
+/* Hover filas */
+table tr:hover {
+  background-color: #FFF3E0;
+  transition: background 0.2s ease-in-out;
+}
+
+/* --- BOTONES ACCIONES --- */
+button[mat-icon-button] {
+  margin: 0 4px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+button[mat-icon-button]:hover {
+  transform: scale(1.15);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+/* Mensaje sin datos */
+.mat-row td[colspan] {
+  text-align: center;
+  font-style: italic;
+  padding: 20px;
+  color: #6D4C41;
+}
+
+/* --- PAGINADOR --- */
+mat-paginator {
+  margin-top: 20px;
+  border-radius: 8px;
+  background-color: #FFF8E1;
+  padding: 8px;
+  font-size: 14px;
+}
+
+/* --- RESPONSIVIDAD --- */
+@media (max-width: 768px) {
+  .header-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .filter-field, .add-button {
+    width: 100%;
+  }
+  mat-card-title {
+    font-size: 22px;
+    text-align: center;
+    justify-content: center;
+  }
+  table th, table td {
+    padding: 10px;
+    font-size: 13px;
+  }
+}

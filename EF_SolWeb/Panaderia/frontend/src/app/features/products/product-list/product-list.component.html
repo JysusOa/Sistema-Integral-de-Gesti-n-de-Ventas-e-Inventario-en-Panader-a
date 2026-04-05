@@ -1,0 +1,198 @@
+<div class="container">
+  <div class="mb-8">
+    <h1 class="text-gray-900 mb-2">Sistema de Gestión de Inventario</h1>
+    <p class="text-gray-600">
+      Gestión completa de productos y categorías del inventario
+    </p>
+  </div>
+
+  <div class="toggle-container">
+    <button mat-button class="toggle-button" [class.active]="selectedView === 'productos'" (click)="onViewChange('productos')">
+      <mat-icon>inventory_2</mat-icon> Productos
+    </button>
+    <button mat-button class="toggle-button" [class.active]="selectedView === 'categorias'" (click)="onViewChange('categorias')">
+      <mat-icon>local_offer</mat-icon> Categorías
+    </button>
+  </div>
+
+  <mat-card class="main-card mt-3" [@fadeIn] *ngIf="selectedView === 'productos'">
+    <div class="product-container border rounded-lg overflow-hidden">
+
+      <div class="header-actions">
+        <div class="actions">
+
+          <div class="status-filters" style="display: flex; gap: 10px; margin-right: 20px;">
+            <button mat-stroked-button
+                    [color]="filterStatus === 'ACTIVO' ? 'primary' : ''"
+                    (click)="setFilterStatus('ACTIVO')"
+                    [class.active-filter]="filterStatus === 'ACTIVO'">
+              <mat-icon>check_circle</mat-icon> Activos
+            </button>
+            <button mat-stroked-button
+                    [color]="filterStatus === 'INACTIVO' ? 'warn' : ''"
+                    (click)="setFilterStatus('INACTIVO')"
+                    [class.active-filter]="filterStatus === 'INACTIVO'">
+              <mat-icon>archive</mat-icon> Descontinuados
+            </button>
+          </div>
+
+          <mat-form-field appearance="outline" class="filter-field">
+            <mat-label>Buscar producto</mat-label>
+            <input matInput (keyup)="applyFilter($event)" #input placeholder="Escribe para filtrar...">
+            <mat-icon matSuffix>search</mat-icon>
+          </mat-form-field>
+
+          <button mat-raised-button color="primary" routerLink="/productos/crear" *ngIf="isAdmin">
+            <mat-icon>add</mat-icon> Nuevo Producto
+          </button>
+        </div>
+      </div>
+
+      <div class="mat-elevation-z2 table-container">
+        <table mat-table [dataSource]="dataSource" matSort>
+
+          <ng-container matColumnDef="idProducto">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Producto</th>
+            <td mat-cell *matCellDef="let element">
+              <div class="flex items-center gap-3">
+                <img *ngIf="element.imagenUrl" [src]="element.imagenUrl" alt="{{element.nombre}}" class="product-img"/>
+                <div>
+                  <div class="font-medium">{{element.nombre}} ({{element.unidadMedida || '—'}})</div>
+                  <div class="text-sm text-gray">{{element.descripcion}}</div>
+                </div>
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="marca">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Marca</th>
+            <td mat-cell *matCellDef="let element"><div class="font-medium text-gray-700">{{ element.marca || '—' }}</div></td>
+          </ng-container>
+
+          <ng-container matColumnDef="categoria">
+            <th mat-header-cell *matHeaderCellDef>Categoría</th>
+            <td mat-cell *matCellDef="let element">{{ element.categoria?.nombre || '—' }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="precio">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-right">Precio</th>
+            <td mat-cell *matCellDef="let element" class="text-right">S/ {{ element.precio | number:'1.2-2' }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="stock">
+            <th mat-header-cell *matHeaderCellDef class="text-center">Stock</th>
+            <td mat-cell *matCellDef="let element" class="text-center">{{ element.stock }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="estado">
+            <th mat-header-cell *matHeaderCellDef class="text-center">Estado</th>
+            <td mat-cell *matCellDef="let element" class="text-center">
+
+              <span class="badge badge-inactive" *ngIf="element.estado === 'INACTIVO'; else stockCheck" style="background-color: #616161; color: white;">
+                DESCONTINUADO
+              </span>
+
+              <ng-template #stockCheck>
+                <span class="badge" [ngClass]="element.stock === 0 ? 'badge-danger' : element.stock <= 10 ? 'badge-warning' : 'badge-success'">
+                  {{ element.stock === 0 ? 'Agotado' : element.stock <= 10 ? 'ULTIMA UNIDADES' : 'Con Stock' }}
+                </span>
+              </ng-template>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef class="text-right">Acciones</th>
+            <td mat-cell *matCellDef="let element" class="text-right">
+              <div class="flex justify-end gap-2">
+
+                <ng-container *ngIf="filterStatus === 'ACTIVO'">
+
+                   <button mat-icon-button style="color: #2E7D32;" *ngIf="isAdmin || isEmpleado" (click)="openRestockDialog(element)" matTooltip="Reabastecer">
+                      <mat-icon>autorenew</mat-icon>
+                   </button>
+
+                   <button mat-icon-button color="primary" *ngIf="isJefeCalidad" (click)="openProductReport(element)">
+                      <mat-icon>assessment</mat-icon>
+                   </button>
+
+                   <ng-container *ngIf="isEmpleado || isAdmin">
+                      <button mat-icon-button color="accent" [routerLink]="getEditRoute(element)" [title]="getEditTooltip()">
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                   </ng-container>
+
+                   <button mat-icon-button color="warn" *ngIf="isAdmin" (click)="confirmDelete(element)" matTooltip="Descontinuar Producto">
+                      <mat-icon>archive</mat-icon>
+                   </button>
+                </ng-container>
+
+                <ng-container *ngIf="filterStatus === 'INACTIVO'">
+                   <button mat-raised-button color="primary" (click)="reactivarProducto(element)" style="height: 30px; line-height: 30px; font-size: 12px;">
+                      <mat-icon style="font-size: 16px; width: 16px; height: 16px; margin-right: 4px;">restore_from_trash</mat-icon>
+                      Habilitar
+                   </button>
+                </ng-container>
+
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell text-center" colspan="7"> No se encontraron productos.</td>
+          </tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+      </div>
+    </div>
+  </mat-card>
+
+  <mat-card class="main-card mt-3" [@fadeIn] *ngIf="selectedView === 'categorias'">
+    <mat-card-header>
+      <mat-card-title>Categorías</mat-card-title>
+      <mat-card-subtitle>Organiza tus productos en categorías</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="categoryForm" *ngIf="isAdmin || isJefeCalidad">
+        <div class="category-form">
+          <mat-form-field appearance="outline" class="category-input">
+            <mat-label>Nueva Categoría</mat-label>
+            <input matInput formControlName="nombre" maxlength="100">
+          </mat-form-field>
+          <button mat-raised-button color="accent" (click)="createCategory()" [disabled]="!categoryForm.valid">Agregar</button>
+        </div>
+      </form>
+      <mat-list>
+        <mat-list-item *ngFor="let x of lstCategoria">
+          <span matListItemTitle>{{ x.nombre }}</span>
+          <button mat-icon-button color="warn" class="delete-button" *ngIf="isAdmin" (click)="deleteCategory(x.idCategoria)" matListItemMeta>
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
+
+  <ng-template #restockDialog>
+    <h2 mat-dialog-title>🍞 Reabastecer Inventario</h2>
+    <mat-dialog-content>
+      <p>Actualiza el stock disponible para: <strong>{{ selectedProductForStock?.nombre }}</strong></p>
+      <mat-form-field appearance="outline" class="w-full mt-2">
+        <mat-label>Nuevo Stock</mat-label>
+        <input matInput type="number" [(ngModel)]="stockToUpdate" min="0">
+        <mat-icon matSuffix>inventory_2</mat-icon>
+      </mat-form-field>
+      <div class="flex gap-2 mt-2">
+        <button mat-stroked-button (click)="stockToUpdate = 50">Set 50</button>
+        <button mat-stroked-button (click)="stockToUpdate = 100">Set 100</button>
+      </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-button (click)="cancelRestock()">Cancelar</button>
+      <button mat-raised-button color="primary" (click)="saveNewStock()">
+        <mat-icon>save</mat-icon> Actualizar
+      </button>
+    </mat-dialog-actions>
+  </ng-template>
+</div>

@@ -1,0 +1,59 @@
+<div class="informes-container">
+  <div class="header-section">
+    <div>
+      <h1>Panel de Calidad</h1>
+      <p>Gestión de auditorías e incidencias</p>
+    </div>
+    <button mat-raised-button class="btn-new" (click)="generarReporte()">
+      <mat-icon>add</mat-icon> Nuevo Informe
+    </button>
+  </div>
+
+  <div class="reports-grid">
+
+    <div *ngFor="let repo of reportes"
+         class="report-card-modern"
+         [ngClass]="repo.estado.toLowerCase()"
+         (click)="verDetalles(repo)">
+
+      <div class="status-strip"></div>
+
+      <div class="card-content">
+        <div class="card-top">
+          <div class="icon-box">
+            <mat-icon>{{ repo.icon }}</mat-icon>
+          </div>
+
+         <button mat-icon-button
+                 color="warn"
+                 class="delete-btn"
+                 *ngIf="isAdmin"
+                 (click)="eliminarInforme(repo.id, $event)">
+            <mat-icon>delete_outline</mat-icon>
+          </button>
+
+        </div>
+
+        <div class="card-main">
+          <h3>{{ repo.titulo }}</h3>
+          <span class="date-badge">
+            <mat-icon>calendar_today</mat-icon> {{ repo.fecha }}
+          </span>
+        </div>
+
+        <div class="card-footer">
+          <span class="status-pill">
+            {{ repo.estado }}
+          </span>
+          <span class="view-text">Ver detalle &rarr;</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div *ngIf="reportes.length === 0" class="empty-state">
+    <mat-icon>folder_open</mat-icon>
+    <p>No hay informes registrados</p>
+  </div>
+</div>

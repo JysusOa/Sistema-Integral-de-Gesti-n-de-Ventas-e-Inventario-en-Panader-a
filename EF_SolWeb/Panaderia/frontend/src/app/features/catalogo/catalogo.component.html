@@ -1,0 +1,37 @@
+<div class="catalogo-container">  <!-- Contenedor principal -->
+  <h1 class="titulo">Catálogo de Productos 🥖🍰</h1>  <!-- Título fijo -->
+
+  <!-- Muestra "Cargando..." mientras isLoading es true -->
+  <div *ngIf="isLoading" class="loading">
+    <p>Cargando productos...</p>
+  </div>
+
+  <!-- Muestra error si hay errorMessage y no está cargando -->
+  <div *ngIf="errorMessage && !isLoading" class="error">
+    <p>{{ errorMessage }}</p>
+  </div>
+
+  <!-- Muestra el catálogo si no hay loading ni error -->
+  <div *ngIf="!isLoading && !errorMessage" class="productos-grid">
+    <div class="categorias">
+      <!-- Itera sobre categoriasConSusProductos (categorías con productos agrupados) -->
+      <div *ngFor="let categoria of categoriasConSusProductos" class="categoria">
+        <h2 class="categoria-nombre">{{ categoria.nombre }}</h2>  <!-- Nombre de la categoría -->
+        <p>Productos: {{ categoria.productos.length }}</p>  <!-- TEMPORAL: Cuenta productos (remover después) -->
+        <ul class="lista-productos">
+          <!-- Itera sobre productos de la categoría -->
+          <li *ngFor="let producto of categoria.productos" class="producto-item">
+            <strong class="producto-nombre">{{ producto.nombre }}</strong><br />  <!-- Nombre del producto -->
+            <small class="producto-medida">{{ producto.unidadMedida }}</small>  <!-- Unidad de medida -->
+            <span class="producto-precio">S/ {{ producto.precio | number:'1.2-2' }}</span><br />  <!-- Precio formateado -->
+
+          </li>
+          <!-- Si no hay productos, muestra mensaje -->
+          <li *ngIf="categoria.productos.length === 0" class="producto-item">
+            <em>No hay productos en esta categoría.</em>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

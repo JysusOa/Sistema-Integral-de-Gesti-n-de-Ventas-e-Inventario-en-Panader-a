@@ -1,0 +1,136 @@
+/* ============================
+  Tema Angular Material
+  ============================ */
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
+
+/* ============================
+  Variables globales de color
+  ============================ */
+:root {
+  --bakery-beige-light: #F5F5DC;      /* Fondo general alternativo */
+  --bakery-brown-dark: #3E2723;       /* Texto principal, títulos */
+  --bakery-brown-tostado: #A1887F;    /* Primario, botones */
+  --bakery-brown-medium: #795548;     /* Acentos */
+  --bakery-orange-golden: #FFB74D;    /* Botones dorados */
+  --bakery-orange-peach: #FF8A65;     /* Hover botones / acento */
+}
+
+/* ============================
+  Estilos para Snackbar
+  ============================ */
+.snackbar-success {
+  background-color: #4CAF50 !important;
+  color: white !important;
+}
+
+.snackbar-error {
+  background-color: #F44336 !important;
+  color: white !important;
+}
+
+/* ============================
+  Estilos base
+  ============================ */
+html, body { 
+  height: 100%; 
+}
+
+body { 
+  margin: 0; 
+  font-family: Roboto, "Helvetica Neue", sans-serif; 
+  background-color: #FFF8E1; /* 🎨 Pastel crema */
+  color: var(--bakery-brown-dark); /* Texto marrón oscuro para contraste */
+}
+
+/* ============================
+  Personalización de botones Angular Material
+  ============================ */
+.mat-stroked-button[color="warn"] {
+  border-color: var(--bakery-orange-peach) !important;
+  color: var(--bakery-orange-peach) !important;
+}
+
+.mat-stroked-button[color="primary"] {
+  border-color: var(--bakery-brown-tostado) !important;
+  color: var(--bakery-brown-tostado) !important;
+}
+
+/* ============================
+  Estilos para Dashboard
+  ============================ */
+
+/* ===== Dashboard Cards ===== */
+.mat-card.dashboard-welcome-card {
+  background-color: #FFFFFF !important;
+  border-radius: 10px !important;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15) !important;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out !important;
+}
+
+.mat-card.dashboard-welcome-card:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2) !important;
+}
+
+.mat-card-title {
+  color: var(--bakery-brown-dark) !important;
+}
+
+.mat-card p {
+  color: var(--bakery-brown-medium) !important;
+}
+
+/* ===== Stat Cards ===== */
+.mat-card.stat-card {
+  background-color: #FFF8E1 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1) !important;
+  text-align: center !important;
+}
+
+.stat-number {
+  font-size: 3em !important;
+  font-weight: bold !important;
+  color: var(--bakery-orange-peach) !important;
+  animation: fadeInScale 0.8s ease-out forwards;
+}
+
+/* ===== Botones personalizados ===== */
+.mat-stroked-button[color="primary"],
+.mat-flat-button[color="primary"] {
+  background-color: var(--bakery-orange-golden) !important;
+  color: var(--bakery-brown-dark) !important;
+  font-weight: bold !important;
+  border-radius: 20px !important;
+  transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.mat-stroked-button[color="primary"]:hover,
+.mat-flat-button[color="primary"]:hover {
+  background-color: var(--bakery-orange-peach) !important;
+  transform: scale(1.05);
+}
+
+/* ===== Animación de números ===== */
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ============================
+  NUEVOS ESTILOS
+  ============================ */
+
+/* Estilos para la tabla de productos */
+.product-list-container {
+  /* Mismo color que el fondo del body */
+  background-color: #FFF8E1 !important;
+  /* Elimina la sombra para que no se vea como un elemento separado */
+  box-shadow: none !important;
+}

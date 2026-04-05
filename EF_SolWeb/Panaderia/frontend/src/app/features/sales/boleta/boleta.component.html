@@ -1,0 +1,68 @@
+<div class="boleta">
+  <button class="cerrar" (click)="cerrarBoleta()">X Cerrar</button>
+
+  <div class="header">
+    <img src="assets/imagen/logo.png" alt="Logo Pan Francisco" class="logo">
+    <h2></h2>
+  </div>
+
+  <p class="ruc">RUC: 20475814609</p>
+
+  <div class="campos">
+    <p><strong>Cajero:</strong> {{ nombreCajero }}</p>
+    <p><strong>Fecha:</strong> {{ formatoFecha(venta.fechaVenta) }}</p>
+    <p><strong>Tipo de pago:</strong> {{ venta.descripcionPago || 'No especificado' }}</p>
+    <p><strong>Cliente:</strong> {{ venta.nombreCliente }}</p>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th class="col-producto">PRODUCTO</th>
+        <th class="col-cantidad">CANT.</th>
+        <th class="col-precio">P. UNIT.</th>
+        <th class="col-total">TOTAL</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of items" class="fila-producto">
+        <td class="producto-info">
+          <div class="nombre-producto-con-unidad">
+            {{ formatearNombreProducto(item) }}
+          </div>
+        </td>
+        <td class="cantidad">{{ item?.cantidad || 0 }}</td>
+        <td class="precio">{{ formatoPrecio(item?.precio || 0) }}</td>
+        <td class="total-item">{{ formatoPrecio((item?.cantidad || 0) * (item?.precio || 0)) }}</td>
+      </tr>
+      <tr *ngIf="items.length === 0" class="sin-productos">
+        <td colspan="4">No hay productos en esta venta.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- SECCIÓN DE TOTALES ACTUALIZADA -->
+  <div class="resumen-total">
+    <div class="fila-resumen">
+      <span class="label">Total Venta:</span>
+      <span class="valor total-destacado">{{ formatoPrecio(getTotal()) }}</span>
+    </div>
+
+    <!-- Condición mejorada: Insensible a mayúsculas y siempre muestra si hay vuelto -->
+    <ng-container *ngIf="(venta.descripcionPago && venta.descripcionPago.toLowerCase() === 'efectivo') || getVuelto() > 0">
+      <div class="fila-resumen">
+        <span class="label">Monto Pagado:</span>
+        <span class="valor">{{ formatoPrecio(getMontoPagado()) }}</span>
+      </div>
+      <div class="fila-resumen">
+        <span class="label">Vuelto:</span>
+        <span class="valor">{{ formatoPrecio(getVuelto()) }}</span>
+      </div>
+    </ng-container>
+  </div>
+
+  <div class="agradecimiento">
+    <h3>¡Gracias por su compra!</h3>
+    <h3>Vuelva pronto</h3>
+  </div>
+</div>

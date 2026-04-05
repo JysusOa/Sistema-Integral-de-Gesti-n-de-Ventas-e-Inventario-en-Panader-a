@@ -1,0 +1,73 @@
+/* Heredamos variables si es posible, o las definimos localmente para asegurar */
+:host {
+  --bakery-brown-dark: #3E2723;
+  --bakery-red-error: #D32F2F;
+  --bakery-beige-light: #F5F5DC;
+}
+
+.dialog-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--bakery-brown-dark);
+  margin-bottom: 10px;
+  border-bottom: 2px solid #FFB74D; /* Línea dorada */
+  padding-bottom: 10px;
+}
+
+.warning-icon {
+  color: #FFA000; /* Ámbar de advertencia */
+  transform: scale(1.5);
+}
+
+h2 {
+  margin: 0;
+  font-family: 'Georgia', serif;
+  font-weight: bold;
+}
+
+.dialog-content {
+  font-family: 'Poppins', sans-serif;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.product-info {
+  background-color: var(--bakery-beige-light);
+  padding: 10px;
+  border-radius: 8px;
+  margin: 15px 0;
+  text-align: center;
+  border: 1px dashed #A1887F;
+}
+
+.product-name {
+  display: block;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--bakery-brown-dark);
+}
+
+.product-detail {
+  font-size: 0.9rem;
+  color: #795548;
+}
+
+.warning-text {
+  color: var(--bakery-red-error);
+  font-size: 0.85rem;
+  margin-top: 10px;
+}
+
+.dialog-actions {
+  padding-top: 10px;
+}
+
+.btn-confirm {
+  background-color: var(--bakery-red-error) !important;
+  color: white !important;
+}
+
+.btn-cancel {
+  color: var(--bakery-brown-dark);
+}

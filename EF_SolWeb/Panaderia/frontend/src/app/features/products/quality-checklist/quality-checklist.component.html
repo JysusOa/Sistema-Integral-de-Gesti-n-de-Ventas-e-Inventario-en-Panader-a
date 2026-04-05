@@ -1,0 +1,73 @@
+<div class="checklist-container">
+
+  <div class="header">
+    <div class="product-info">
+      <h2 mat-dialog-title>
+        <mat-icon style="vertical-align: middle; margin-right: 5px;">fact_check</mat-icon>
+        Control de Calidad
+      </h2>
+      <p class="subtitle">Inspección técnica: <strong>{{ data.nombre }}</strong></p>
+
+      <span class="stock-badge" [ngStyle]="{'color': data.stock < 10 ? '#FF5252' : '#FFD700', 'border-color': data.stock < 10 ? '#FF5252' : '#FFD700'}">
+        <mat-icon style="font-size: 12px; height: 12px; width: 12px;">inventory_2</mat-icon>
+        Stock: {{ data.stock }} unid.
+      </span>
+    </div>
+
+    <!-- ⭐ NUEVO: Contenedor derecho con Logo y Foto del Producto -->
+    <div class="header-right">
+      <img src="assets/imagen/logo.png" class="company-logo" alt="Logo Pan Francisco">
+    </div>
+  </div>
+
+  <mat-dialog-content>
+    <div class="check-list-section">
+      <h3>📋 Puntos de Inspección</h3>
+
+      <div *ngFor="let item of checklist" class="check-item" [class.checked-item]="item.cumple">
+        <mat-checkbox [(ngModel)]="item.cumple" color="primary">
+          <span [style.text-decoration]="item.cumple ? 'none' : 'none'" [style.font-weight]="item.cumple ? '500' : '400'">
+            {{ item.criterio }}
+          </span>
+        </mat-checkbox>
+      </div>
+    </div>
+
+    <div class="form-grid">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Dictamen Final</mat-label>
+        <mat-select [(ngModel)]="estadoFinal">
+          <mat-select-trigger>
+            <span *ngIf="estadoFinal === 'Aprobado'">✅ Aprobado para venta</span>
+            <span *ngIf="estadoFinal === 'Observado'">⚠️ Observado (Revisión)</span>
+            <span *ngIf="estadoFinal === 'Rechazado'">❌ Rechazado (Merma)</span>
+            <span *ngIf="estadoFinal === 'Pendiente'">⏳ Seleccione estado...</span>
+          </mat-select-trigger>
+
+          <mat-option value="Aprobado">
+            <span style="color: #2E7D32;">✅ <strong>Aprobado</strong> para venta</span>
+          </mat-option>
+          <mat-option value="Observado">
+            <span style="color: #EF6C00;">⚠️ <strong>Observado</strong> (Revisión)</span>
+          </mat-option>
+          <mat-option value="Rechazado">
+            <span style="color: #C62828;">❌ <strong>Rechazado</strong> (Merma)</span>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Observaciones del Inspector</mat-label>
+        <textarea matInput [(ngModel)]="observaciones" rows="3" placeholder="Detalles, número de lote afectado, causa del rechazo..."></textarea>
+        <mat-icon matSuffix>edit_note</mat-icon>
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button (click)="cancelar()" style="color: #8D6E63;">Cancelar</button>
+    <button mat-raised-button color="primary" (click)="guardarInforme()">
+      <mat-icon style="margin-right: 5px;">save_as</mat-icon> Registrar Informe
+    </button>
+  </mat-dialog-actions>
+</div>

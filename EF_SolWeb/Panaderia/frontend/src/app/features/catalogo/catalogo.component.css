@@ -1,0 +1,152 @@
+.catalogo-container {
+  padding: 3rem 1.5rem;
+  background: linear-gradient(180deg, #fffaf3, #ffe0b2);
+  min-height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  animation: fadeIn 0.9s ease-in-out;
+}
+
+/* Título principal */
+.titulo {
+  text-align: center;
+  font-size: 3rem;
+  color: #5d4037;
+  margin-bottom: 3rem;
+  text-shadow: 2px 3px 8px rgba(93, 64, 55, 0.2);
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  position: relative;
+}
+
+.titulo::after {
+  content: "";
+  display: block;
+  width: 100px;
+  height: 4px;
+  background: linear-gradient(90deg, #ffa726, #ff9800);
+  margin: 0.8rem auto 0;
+  border-radius: 3px;
+}
+
+/* Contenedor de categorías */
+.categorias {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2.5rem;
+  justify-items: center;
+  animation: fadeInUp 1s ease-in-out;
+}
+
+/* Tarjeta de categoría */
+.categoria {
+  background: #fff8e1;
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 360px;
+  transition: all 0.35s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.categoria::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 6px;
+  background: linear-gradient(90deg, #ffb74d, #ffcc80);
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  transition: background 0.3s ease;
+}
+
+.categoria:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 14px 28px rgba(255, 152, 0, 0.25);
+  background: #fff3d0;
+}
+
+.categoria:hover::before {
+  background: linear-gradient(90deg, #ffa726, #ffb74d);
+}
+
+/* Título de categoría */
+.categoria h2 {
+  font-size: 1.6rem;
+  color: #4e342e;
+  border-bottom: 2px solid #d7ccc8;
+  margin-bottom: 1.2rem;
+  padding-bottom: 0.6rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* Lista de productos */
+.categoria ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.categoria li {
+  font-size: 1rem;
+  padding: 0.8rem 0.6rem;
+  border-bottom: 1px dashed #d7ccc8;
+  color: #4e342e;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  transition: all 0.25s ease;
+  border-radius: 8px;
+}
+
+.categoria li::before {
+  content: "🥐";
+  font-size: 1.2rem;
+  opacity: 0.85;
+}
+
+.categoria li:hover {
+  color: #8d6e63;
+  transform: translateX(6px);
+  background-color: rgba(255, 248, 225, 0.8);
+}
+
+.categoria li:last-child {
+  border-bottom: none;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(25px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsividad */
+@media (max-width: 600px) {
+  .titulo {
+    font-size: 2.2rem;
+  }
+
+  .categoria {
+    padding: 1.5rem;
+  }
+
+  .categoria h2 {
+    font-size: 1.3rem;
+  }
+
+  .categoria li {
+    font-size: 0.95rem;
+    padding: 0.6rem 0.4rem;
+  }
+}

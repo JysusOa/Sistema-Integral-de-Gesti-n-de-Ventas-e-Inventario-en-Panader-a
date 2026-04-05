@@ -1,0 +1,70 @@
+<div class="paper-document">
+
+  <header class="doc-header">
+    <div class="logo-area">
+      <img src="assets/imagen/logo.png" alt="Logo" class="doc-logo">
+      <div class="company-info">
+        <h1></h1>
+        <span>Departamento de Calidad y Seguridad Alimentaria</span>
+      </div>
+    </div>
+    <div class="doc-meta">
+      <p><strong>FECHA:</strong> {{ data.fecha }}</p>
+      <p><strong>FOLIO:</strong> #REF-{{ data.fecha | date:'ddMM' }}-{{ data.titulo.length }}</p>
+    </div>
+  </header>
+
+  <mat-divider></mat-divider>
+
+  <div class="report-title-section">
+    <h2>INFORME DE INSPECCIÓN</h2>
+    <h3 class="product-name">{{ data.titulo }}</h3>
+
+    <div class="status-stamp" [style.border-color]="getStatusColor(data.estado)" [style.color]="getStatusColor(data.estado)">
+      {{ data.estado | uppercase }}
+    </div>
+  </div>
+
+  <div class="checklist-section" *ngIf="data.detalles && data.detalles.checklist">
+    <h4>📋 DETALLE DE EVALUACIÓN</h4>
+
+    <div class="checklist-grid">
+      <div *ngFor="let item of data.detalles.checklist" class="check-row">
+        <span class="criterion">{{ item.criterio }}</span>
+
+        <span class="result" [class.pass]="item.cumple" [class.fail]="!item.cumple">
+          <mat-icon>{{ item.cumple ? 'check_circle' : 'cancel' }}</mat-icon>
+          {{ item.cumple ? 'CUMPLE' : 'NO CUMPLE' }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="observations-section">
+    <h4>📝 OBSERVACIONES DEL INSPECTOR</h4>
+    <div class="obs-box">
+      <p *ngIf="data.detalles?.observaciones; else noObs">
+        {{ data.detalles.observaciones }}
+      </p>
+      <ng-template #noObs>
+        <p class="text-muted">Sin observaciones adicionales registradas.</p>
+      </ng-template>
+    </div>
+  </div>
+
+  <footer class="doc-footer">
+    <div class="signature-line">
+      <p>Jefe de Calidad</p>
+      <span>Firma Digital Autorizada</span>
+    </div>
+    <p class="system-note">Documento generado electrónicamente por Sistema Pan Francisco v1.0</p>
+  </footer>
+
+  <div class="actions-no-print">
+    <button mat-stroked-button (click)="cerrar()">Cerrar</button>
+    <button mat-raised-button color="primary" (click)="imprimir()">
+      <mat-icon>print</mat-icon> Imprimir / PDF
+    </button>
+  </div>
+
+</div>

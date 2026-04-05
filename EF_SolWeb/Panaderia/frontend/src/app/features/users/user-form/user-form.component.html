@@ -1,0 +1,153 @@
+<div class="user-form-container">
+  <mat-card-title class="user-form-container__title">{{ isEditMode ? 'Editar Usuario' : 'Crear Nuevo Usuario' }}</mat-card-title>
+
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="user-form">
+    <div class="general-info-grid">
+      <!-- Columna Izquierda: Datos Personales -->
+      <div class="column-left">
+        <mat-card-title class="panel-header__title">
+          <mat-icon class="header-icon">person</mat-icon>
+          Datos Personales
+        </mat-card-title>
+
+        <!-- Nombre -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Nombre</mat-label>
+          <input matInput formControlName="nombre" placeholder="Ej: Juan" maxlength="20" />
+          <ng-container *ngIf="userForm.get('nombre')?.invalid && userForm.get('nombre')?.touched">
+            <mat-error *ngIf="userForm.get('nombre')?.hasError('required')">
+              El nombre es requerido.
+            </mat-error>
+            <mat-error *ngIf="userForm.get('nombre')?.hasError('maxlength')">
+              El nombre no puede exceder 20 caracteres.
+            </mat-error>
+            <mat-error *ngIf="userForm.get('nombre')?.hasError('lettersOnly')">
+              El nombre solo debe contener letras y espacios.
+            </mat-error>
+          </ng-container>
+        </mat-form-field>
+
+        <!-- Apellidos -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Apellidos</mat-label>
+          <input matInput formControlName="apellidos" placeholder="Ej: Pérez García" maxlength="20" />
+          <ng-container *ngIf="userForm.get('apellidos')?.invalid && userForm.get('apellidos')?.touched">
+            <mat-error *ngIf="userForm.get('apellidos')?.hasError('required')">
+              Los apellidos son requeridos.
+            </mat-error>
+            <mat-error *ngIf="userForm.get('apellidos')?.hasError('maxlength')">
+              Los apellidos no pueden exceder 20 caracteres.
+            </mat-error>
+            <mat-error *ngIf="userForm.get('apellidos')?.hasError('lettersOnly')">
+              Los apellidos solo deben contener letras y espacios.
+            </mat-error>
+          </ng-container>
+        </mat-form-field>
+
+        <!-- Teléfono -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Teléfono</mat-label>
+          <input matInput formControlName="telefono" type="tel" placeholder="Ej: 9XXXXXXXX" maxlength="9" />
+          <mat-hint>Debe ser un número de 9 dígitos que empiece con '9'.</mat-hint>
+          <ng-container *ngIf="userForm.get('telefono')?.invalid && userForm.get('telefono')?.touched">
+            <mat-error *ngIf="userForm.get('telefono')?.hasError('peruPhoneNumber')">
+              El teléfono debe ser de 9 dígitos y empezar con '9'.
+            </mat-error>
+          </ng-container>
+        </mat-form-field>
+
+        <!-- Correo -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Correo Electrónico</mat-label>
+          <input matInput formControlName="correo" type="email" placeholder="Ej: juan.perez@example.com" maxlength="25" />
+          <ng-container *ngIf="userForm.get('correo')?.invalid && userForm.get('correo')?.touched">
+            <mat-error *ngIf="userForm.get('correo')?.hasError('required')">
+              El correo es requerido.
+            </mat-error>
+            <mat-error *ngIf="userForm.get('correo')?.hasError('email')">
+              El formato del correo no es válido.
+            </mat-error>
+            <mat-error *ngIf="userForm.get('correo')?.hasError('maxlength')">
+              El correo no puede exceder 25 caracteres.
+            </mat-error>
+          </ng-container>
+        </mat-form-field>
+      </div>
+
+      <!-- Columna Derecha: Seguridad y Rol -->
+      <div class="column-right">
+        <mat-card-title class="panel-header__title">
+          <mat-icon class="header-icon">security</mat-icon>
+          Seguridad y Acceso
+        </mat-card-title>
+
+        <!-- Clave (condicional según modo edición/creación) -->
+        <ng-container *ngIf="!isEditMode">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Contraseña</mat-label>
+            <input matInput formControlName="clave" type="password" placeholder="••••••••" maxlength="255" />
+            <ng-container *ngIf="userForm.get('clave')?.invalid && userForm.get('clave')?.touched">
+              <mat-error *ngIf="userForm.get('clave')?.hasError('required')">
+                La contraseña es requerida.
+              </mat-error>
+              <mat-error *ngIf="userForm.get('clave')?.hasError('minlength')">
+                La contraseña debe tener al menos 6 caracteres.
+              </mat-error>
+              <mat-error *ngIf="userForm.get('clave')?.hasError('maxlength')">
+                La contraseña no puede exceder 255 caracteres.
+              </mat-error>
+            </ng-container>
+          </mat-form-field>
+        </ng-container>
+        <ng-container *ngIf="isEditMode">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Nueva Contraseña (opcional)</mat-label>
+            <input matInput formControlName="clave" type="password" placeholder="••••••••" maxlength="255" />
+            <mat-hint>Deje el campo vacío si no desea cambiar la contraseña.</mat-hint>
+            <ng-container *ngIf="userForm.get('clave')?.invalid && userForm.get('clave')?.touched">
+              <mat-error *ngIf="userForm.get('clave')?.hasError('minlength')">
+                La contraseña debe tener al menos 6 caracteres.
+              </mat-error>
+              <mat-error *ngIf="userForm.get('clave')?.hasError('maxlength')">
+                La contraseña no puede exceder 255 caracteres.
+              </mat-error>
+            </ng-container>
+          </mat-form-field>
+        </ng-container>
+
+        <!-- Rol -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Rol</mat-label>
+          <mat-select formControlName="rol" [disabled]="rolFieldDisabled">
+            <mat-option *ngFor="let rol of roles" [value]="rol">
+              {{ rol }}
+            </mat-option>
+          </mat-select>
+          <!-- Mensaje de información cuando el rol está bloqueado -->
+          <mat-hint *ngIf="rolFieldDisabled">
+            El rol de administrador no puede ser cambiado
+          </mat-hint>
+          <ng-container *ngIf="userForm.get('rol')?.invalid && userForm.get('rol')?.touched">
+            <mat-error *ngIf="userForm.get('rol')?.hasError('required')">
+              El rol es requerido.
+            </mat-error>
+            <mat-error *ngIf="userForm.get('rol')?.hasError('pattern')">
+              El rol debe ser 'ADMINISTRADOR' o 'EMPLEADO'.
+            </mat-error>
+          </ng-container>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- Botones de acción -->
+    <div class="form-actions">
+      <button mat-stroked-button color="warn" (click)="router.navigate(['/usuarios'])" type="button">
+        Cancelar
+      </button>
+      <button mat-stroked-button color="primary" type="submit" [disabled]="!userForm.valid || isLoading">
+        <span *ngIf="!isLoading">{{ isEditMode ? 'Guardar Cambios' : 'Crear Usuario' }}</span>
+        <mat-spinner *ngIf="isLoading" [diameter]="20" class="user-form__spinner"></mat-spinner>
+      </button>
+    </div>
+  </form>
+</div>

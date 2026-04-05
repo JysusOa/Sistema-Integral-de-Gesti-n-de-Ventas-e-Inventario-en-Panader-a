@@ -1,0 +1,146 @@
+/* Simulación de papel */
+.paper-document {
+  padding: 40px;
+  background-color: white;
+  font-family: 'Times New Roman', Times, serif; /* Fuente formal */
+  color: #333;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Header */
+.doc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.doc-logo {
+  width: 60px;
+  height: 60px;
+  filter: grayscale(100%); /* Toque profesional, logo en grises */
+}
+
+.company-info h1 {
+  margin: 0;
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+  color: #000;
+}
+
+.company-info span {
+  font-size: 0.8rem;
+  color: #666;
+  text-transform: uppercase;
+}
+
+.doc-meta {
+  text-align: right;
+  font-size: 0.9rem;
+}
+
+/* Título y Estampado */
+.report-title-section {
+  text-align: center;
+  margin: 30px 0;
+  position: relative;
+}
+
+.product-name {
+  font-size: 1.5rem;
+  color: #3E2723;
+  margin-top: 5px;
+}
+
+/* El "Sello" de aprobado/rechazado */
+.status-stamp {
+  position: absolute;
+  top: 0;
+  right: 10px;
+  border: 3px double;
+  padding: 5px 15px;
+  font-weight: bold;
+  font-size: 1.2rem;
+  transform: rotate(-15deg); /* Rotación para parecer sello */
+  opacity: 0.8;
+  mask-image: url('data:image/svg+xml;base64,...'); /* Opcional: efecto grunge */
+}
+
+/* Checklist */
+.checklist-section h4, .observations-section h4 {
+  background: #f5f5f5;
+  padding: 8px;
+  border-left: 4px solid #3E2723;
+  font-family: 'Arial', sans-serif;
+  font-size: 0.9rem;
+}
+
+.check-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px dotted #ccc;
+}
+
+.result {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: bold;
+  font-family: 'Arial', sans-serif;
+  font-size: 0.85rem;
+}
+
+.result.pass { color: #2E7D32; }
+.result.fail { color: #C62828; }
+
+/* Observaciones */
+.obs-box {
+  border: 1px solid #ddd;
+  padding: 15px;
+  background-color: #fafafa;
+  min-height: 60px;
+  font-style: italic;
+}
+
+/* Footer */
+.doc-footer {
+  margin-top: 50px;
+  text-align: center;
+}
+
+.signature-line {
+  margin: 0 auto;
+  width: 200px;
+  border-top: 1px solid #000;
+  padding-top: 5px;
+  margin-bottom: 20px;
+}
+
+.system-note {
+  font-size: 0.7rem;
+  color: #999;
+}
+
+/* Botones flotantes */
+.actions-no-print {
+  margin-top: 30px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  border-top: 2px solid #eee;
+  padding-top: 20px;
+}
+
+/* Ocultar botones al imprimir */
+@media print {
+  .actions-no-print { display: none; }
+  .paper-document { padding: 0; }
+}

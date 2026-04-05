@@ -1,0 +1,309 @@
+<mat-card class="sale-form-container">
+  <mat-card-header>
+    <mat-card-title>{{ isEditMode ? 'Editar Venta' : 'Registrar Nueva Venta' }}</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <form [formGroup]="saleForm" (ngSubmit)="onSubmit()" class="sale-form" id="saleForm">
+
+      <!-- Sección de Productos -->
+      <div class="add-button-container">
+        <!-- Botón + Alineado Izquierda -->
+        <div class="add-button-row">
+          <button mat-icon-button color="primary" (click)="addDetalle()" matTooltip="Agregar nueva fila de producto" class="add-btn-main">
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+
+        <!-- Contenedor para filas dinámicas -->
+        <div class="dynamic-details-container">
+          <!-- Filas Dinámicas -->
+          <div *ngFor="let detalle of detalles; let i = index; trackBy: trackByDetalle" class="detalle-row quick-add-row">
+            <!-- Botón Clear (solo para la primera fila) -->
+            <button *ngIf="i === 0" mat-icon-button color="warn" (click)="clearQuickAdd()" matTooltip="Limpiar fila superior" class="quick-clear-btn">
+              <mat-icon>clear</mat-icon>
+            </button>
+
+            <!-- Buscador de Producto -->
+            <mat-form-field appearance="outline" class="quick-field full-width">
+              <mat-label>Buscar Producto 🛒</mat-label>
+              <mat-icon matPrefix color="accent">search</mat-icon>
+              <input
+                matInput
+                [value]="getProductDisplayValue(i)"
+                (input)="onSearchInput($event, i)"
+                [matAutocomplete]="productAutocomplete"
+                [readonly]="detalle.idProducto > 0"
+                placeholder="Buscar producto por nombre...">
+              <mat-autocomplete #productAutocomplete="matAutocomplete" (optionSelected)="onProductSelected($event, false, i)" [displayWith]="displayFn">
+                <mat-option
+                  *ngFor="let product of getFilteredProducts(detalle.searchTerm || '')"
+                  [value]="product.idProducto"
+                  [class.product-option-disabled]="isProductDisabled(product.idProducto ?? 0, i) || product.idProducto === detalle.idProducto || (product.stock ?? 0) <= 0">
+
+                  <div class="product-option">
+                    <mat-icon *ngIf="product.idProducto === detalle.idProducto" class="check-icon">check</mat-icon>
+                    <span class="product-name">{{ product.nombre }}</span>
+                    <span class="product-details">
+                      {{ product.marca }}
+                    </span>
+                    <span class="stock-indicator"
+                          [class.low-stock]="(product.stock ?? 0) < 10 && (product.stock ?? 0) > 0"
+                          [class.no-stock]="(product.stock ?? 0) === 0">
+                      {{ (product.stock ?? 0) === 0 ? '❌ Sin stock' : (product.stock ?? 0) + ' disp.' }}
+                    </span>
+                  </div>
+                </mat-option>
+              </mat-autocomplete>
+              <!-- Error manual si idProducto inválido -->
+              <mat-error *ngIf="detalle.idProducto <= 0 && (detalle.searchTerm || '').length > 0">
+                Seleccione un producto válido.
+              </mat-error>
+            </mat-form-field>
+
+            <!-- Cantidad -->
+            <mat-form-field appearance="outline" class="quick-field half-width">
+              <mat-label>Cantidad 📦</mat-label>
+              <mat-icon matPrefix color="primary">inventory_2</mat-icon>
+              <input matInput
+                     type="number"
+                     [(ngModel)]="detalle.cantidad"
+                     [ngModelOptions]="{standalone: true}"
+                     [min]="1"
+                     [max]="getMaxCantidad(i)"
+                     (input)="onQuickCantidadInput($event, i)">
+              <mat-error *ngIf="detalle.cantidad < 1">Mínimo 1.</mat-error>
+              <mat-error *ngIf="detalle.cantidad > getMaxCantidad(i)">
+                Máximo {{ getMaxCantidad(i) }} (stock disponible).
+              </mat-error>
+            </mat-form-field>
+
+            <!-- Precio (readonly) -->
+            <mat-form-field appearance="outline" class="quick-field half-width">
+              <mat-label>Precio 💰</mat-label>
+              <mat-icon matPrefix color="accent">attach_money</mat-icon>
+              <input matInput [value]="getDetallePrice(i)" readonly placeholder="S/ 0.00">
+            </mat-form-field>
+
+            <!-- Botón Limpiar (para filas adicionales) -->
+            <button *ngIf="i > 0" mat-icon-button color="warn" (click)="clearDetalleRow(i)" matTooltip="Limpiar esta fila" class="clear-row-btn">
+              <mat-icon>clear</mat-icon>
+            </button>
+
+            <!-- Botón Eliminar (solo para filas adicionales) -->
+            <button *ngIf="i > 0" mat-icon-button color="warn" (click)="clearDetalle(i)" matTooltip="Eliminar esta fila" class="delete-btn-row">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sección de Información de Pago y Cliente -->
+      <div class="second-row">
+        <!-- Panel Izquierdo (Información del Cliente) -->
+        <div class="left-panel">
+          <!-- Método de Pago -->
+          <div formGroupName="metodoPago">
+            <mat-form-field appearance="outline" class="narrow-field-fixed">
+              <mat-label>Método de Pago 💳</mat-label>
+              <mat-icon matPrefix color="primary">payment</mat-icon>
+              <mat-select id="metodoPagoSelect" formControlName="idMetodoPago" (selectionChange)="onMetodoPagoChange($event.value)">
+                <mat-option *ngFor="let x of lstMetodoPago" [value]="x.idMetodoPago">
+                  {{ x.nombre }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="saleForm.get('metodoPago.idMetodoPago')?.hasError('required') && saleForm.get('metodoPago.idMetodoPago')?.touched">
+                Método de pago es requerido.
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <!-- Tipo de Comprobante -->
+          <mat-form-field appearance="outline" class="narrow-field-fixed">
+            <mat-label>Tipo de Comprobante 📄</mat-label>
+            <mat-icon matPrefix color="accent">receipt_long</mat-icon>
+            <mat-select id="tipoComprobanteSelect" formControlName="tipoComprobante" required (selectionChange)="onTipoComprobanteChange($event.value)">
+              <mat-option value="boleta">Boleta</mat-option>
+              <mat-option value="factura">Factura</mat-option>
+            </mat-select>
+            <mat-error *ngIf="saleForm.get('tipoComprobante')?.hasError('required')">
+              Seleccione un tipo de comprobante.
+            </mat-error>
+          </mat-form-field>
+
+          <!-- DNI/RUC (solo visible si total >= 700) -->
+          <div class="document-row" *ngIf="isTotalVentaOver700()">
+            <mat-form-field appearance="outline">
+              <!-- DNI (visible si boleta) -->
+              <mat-label *ngIf="saleForm.get('tipoComprobante')?.value === 'boleta'">DNI 🆔</mat-label>
+              <mat-icon matPrefix color="accent">person</mat-icon>
+              <input *ngIf="saleForm.get('tipoComprobante')?.value === 'boleta'"
+                    matInput formControlName="dni"
+                    type="tel"
+                    maxlength="8"
+                    placeholder="Ingrese DNI (8 dígitos)"
+                    (keypress)="blockNonNumericInput($event)"/>
+              <mat-error *ngIf="saleForm.get('tipoComprobante')?.value === 'boleta' && saleForm.get('dni')?.hasError('required') && saleForm.get('dni')?.touched">
+                El DNI es obligatorio para boletas
+              </mat-error>
+              <mat-error *ngIf="saleForm.get('tipoComprobante')?.value === 'boleta' && saleForm.get('dni')?.hasError('pattern')">
+                El DNI debe tener 8 dígitos numéricos
+              </mat-error>
+              <mat-hint *ngIf="saleForm.get('tipoComprobante')?.value === 'boleta' && !saleForm.get('dni')?.value">
+                Complete DNI: Subtotal excede S/ 700
+              </mat-hint>
+
+              <!-- RUC (visible si factura) -->
+              <mat-label *ngIf="saleForm.get('tipoComprobante')?.value === 'factura'">RUC 🏢</mat-label>
+              <mat-icon matPrefix color="primary">business</mat-icon>
+              <input *ngIf="saleForm.get('tipoComprobante')?.value === 'factura'"
+                    matInput formControlName="ruc"
+                    maxlength="11"
+                    placeholder="Ingrese RUC (11 dígitos, inicia con 10 o 20)"
+                    (keypress)="blockNonNumericInput($event)"/>
+              <mat-error *ngIf="saleForm.get('tipoComprobante')?.value === 'factura' && saleForm.get('ruc')?.hasError('required') && saleForm.get('ruc')?.touched">
+                El RUC es obligatorio para facturas
+              </mat-error>
+              <mat-error *ngIf="saleForm.get('tipoComprobante')?.value === 'factura' && saleForm.get('ruc')?.hasError('pattern')">
+                El RUC debe tener 11 dígitos y empezar con 10 o 20
+              </mat-error>
+              <mat-hint *ngIf="saleForm.get('tipoComprobante')?.value === 'factura' && !saleForm.get('ruc')?.value">
+                Complete RUC: Subtotal excede S/ 700
+              </mat-hint>
+            </mat-form-field>
+          </div>
+
+          <!-- Nombre del Cliente (solo visible si total >= 700) -->
+          <mat-form-field *ngIf="isTotalVentaOver700()" appearance="outline" class="full-width">
+            <mat-label>Nombre del Cliente 👤</mat-label>
+            <mat-icon matPrefix color="accent">person_outline</mat-icon>
+            <input matInput formControlName="nombreCliente" placeholder="Ingrese nombre completo del cliente"
+                  (keypress)="preventNumberInput($event)" />
+            <mat-error *ngIf="saleForm.get('nombreCliente')?.hasError('required') && saleForm.get('nombreCliente')?.touched">
+              Nombre del cliente es requerido.
+            </mat-error>
+            <mat-error *ngIf="saleForm.get('nombreCliente')?.hasError('pattern')">
+              Solo letras y espacios permitidos.
+            </mat-error>
+            <mat-error *ngIf="saleForm.get('nombreCliente')?.hasError('maxlength')">
+              Máximo 200 caracteres.
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <!-- Paneles de Pagos -->
+        <div class="payment-panel-inline">
+          <!-- Panel Efectivo -->
+          <div *ngIf="showCashPaymentPanel" class="cash-payment-panel">
+            <mat-card-header class="panel-header">
+              <mat-card-title>
+                <mat-icon class="header-icon">money</mat-icon>
+                Efectivo 💵
+              </mat-card-title>
+            </mat-card-header>
+            <mat-card-content class="panel-content">
+              <mat-form-field appearance="outline" class="half-width">
+                <mat-label>Monto Pagado 💵</mat-label>
+                <input matInput formControlName="montoPagado" type="number" min="0" step="0.01" placeholder="Ej: 100.00">
+                <mat-error *ngIf="saleForm.get('montoPagado')?.hasError('required') && saleForm.get('montoPagado')?.touched">
+                  Obligatorio.
+                </mat-error>
+                <mat-error *ngIf="saleForm.get('montoPagado')?.hasError('min')">
+                  Mayor o igual a S/ {{ getTotalVenta() }}.
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="half-width">
+                <mat-label>Vuelto 🔄</mat-label>
+                <input matInput formControlName="vuelto" type="number" readonly>
+                <mat-icon matSuffix>payments</mat-icon>
+              </mat-form-field>
+            </mat-card-content>
+          </div>
+
+          <!-- Panel Tarjeta -->
+          <div *ngIf="showCardPaymentPanel" class="card-payment-panel">
+            <mat-card-header class="panel-header">
+              <mat-card-title>
+                <mat-icon class="header-icon">credit_card</mat-icon>
+                Tarjeta 💳
+              </mat-card-title>
+            </mat-card-header>
+            <mat-card-content class="panel-content">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Número de Tarjeta 💳</mat-label>
+                <input matInput formControlName="cardNumber" maxlength="19" placeholder="1234 5678 9012 3456"
+                      type="text" inputmode="numeric" (input)="formatCardNumber($event)" />
+                <mat-error *ngIf="saleForm.get('cardNumber')?.hasError('required') && saleForm.get('cardNumber')?.touched">
+                  Obligatorio.
+                </mat-error>
+                <mat-error *ngIf="saleForm.get('cardNumber')?.hasError('pattern')">
+                  16 dígitos.
+                </mat-error>
+              </mat-form-field>
+              <div class="card-details-row">
+                <mat-form-field appearance="outline" class="half-width">
+                  <mat-label>Fecha Exp. 📅</mat-label>
+                  <input matInput formControlName="cardExpiry" placeholder="MM/AA" maxlength="5"
+                        type="text" inputmode="numeric" (input)="formatCardExpiry($event)" />
+                  <mat-error *ngIf="saleForm.get('cardExpiry')?.hasError('required') && saleForm.get('cardExpiry')?.touched">
+                    Obligatoria.
+                  </mat-error>
+                  <mat-error *ngIf="saleForm.get('cardExpiry')?.hasError('pattern')">
+                    MM/AA inválido.
+                  </mat-error>
+                  <mat-error *ngIf="saleForm.get('cardExpiry')?.hasError('cardExpired')">
+                    Caducada.
+                  </mat-error>
+                  <mat-error *ngIf="saleForm.get('cardExpiry')?.hasError('cardTooFarInFuture')">
+                    Máx. 5 años.
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="half-width">
+                  <mat-label>CVV 🔒</mat-label>
+                  <input matInput formControlName="cardCVV" maxlength="3" type="password" placeholder="123" />
+                  <mat-error *ngIf="saleForm.get('cardCVV')?.hasError('required') && saleForm.get('cardCVV')?.touched">
+                    Obligatorio.
+                  </mat-error>
+                  <mat-error *ngIf="saleForm.get('cardCVV')?.hasError('pattern')">
+                    3 dígitos.
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </mat-card-content>
+          </div>
+
+          <!-- NOTA: Los paneles de Yape y Plin NO aparecen aquí porque se manejan por diálogos modales -->
+        </div>
+      </div>
+
+      <!-- Resumen de Totales -->
+      <div class="total-venta-summary">
+        <h3>
+          <mat-icon>calculate</mat-icon>
+          Subtotal: S/ {{ getSubtotal() }} 📊
+        </h3>
+        <h3>
+          <mat-icon>percent</mat-icon>
+          IGV (18%): S/ {{ getIGV() }} 💹
+        </h3>
+        <h2>
+          <mat-icon>monetization_on</mat-icon>
+          Total de Venta: S/ {{ getTotalVenta() }}
+        </h2>
+      </div>
+
+      <!-- Botones de Acción -->
+      <div class="form-actions">
+        <button mat-stroked-button color="warn" type="button" (click)="router.navigate(['/ventas'])" class="cancel-btn-action">
+          <mat-icon>cancel</mat-icon>
+          Cancelar 🚫
+        </button>
+        <button mat-raised-button color="primary" type="submit"
+                [disabled]="!saleForm.valid || detalles.length === 0" class="submit-btn-action">
+          <mat-icon>save</mat-icon>
+          {{ isEditMode ? 'Guardar Cambios' : 'Registrar Venta' }} ✅
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

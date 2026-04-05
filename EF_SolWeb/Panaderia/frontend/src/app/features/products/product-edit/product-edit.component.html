@@ -1,0 +1,87 @@
+<div class="container">
+  <mat-card class="form-card" [@fadeIn]>
+    <mat-card-header>
+      <mat-card-title>✏️ Editar Producto</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="form-border">
+        <form class="product-form" [formGroup]="productForm" (ngSubmit)="actualizarProducto()">
+          <!-- Fila 1: Categoría y Nombre -->
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="half-width field-categoria">
+              <mat-label>📂 Categoría</mat-label>
+              <mat-select formControlName="idCategoria" required (selectionChange)="onCategoriaChange()">
+                <mat-option *ngFor="let x of lstCategoria" [value]="x.idCategoria">{{ x.nombre }}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="productForm.get('idCategoria')?.hasError('required') && productForm.get('idCategoria')?.touched">La categoría es requerida</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="half-width field-nombre">
+              <mat-label>🏷️ Nombre</mat-label>
+              <input matInput formControlName="nombre" maxlength="200" placeholder="Ej: Pan Integral">
+              <mat-error *ngIf="productForm.get('nombre')?.hasError('required')">El nombre es requerido</mat-error>
+            </mat-form-field>
+          </div>
+           
+          <!-- Fila 2: Marca y Unidad de Medida (condicionales) -->
+          <div class="form-row" *ngIf="mostrarMarca || mostrarUnidadMedida">
+            <mat-form-field appearance="outline" class="half-width field-marca" *ngIf="mostrarMarca">
+              <mat-label>🏢 Marca</mat-label>
+              <input matInput formControlName="marca" maxlength="100" placeholder="Ej: Bimbo">
+              <mat-error *ngIf="productForm.get('marca')?.hasError('required')">La marca es requerida</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="half-width field-unidad" *ngIf="mostrarUnidadMedida">
+              <mat-label>📏 Unidad de Medida</mat-label>
+              <mat-select formControlName="unidadMedida" [required]="isUnidadMedidaRequired">
+                <mat-option *ngFor="let unidad of unidadesDisponibles" [value]="unidad">{{ unidad }}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="productForm.get('unidadMedida')?.hasError('required') && productForm.get('unidadMedida')?.touched">La unidad de medida es requerida</mat-error>
+            </mat-form-field>
+          </div>
+
+          <!-- Descripción (full-width) -->
+          <mat-form-field appearance="outline" class="full-width field-descripcion">
+            <mat-label>📝 Descripción</mat-label>
+            <textarea matInput formControlName="descripcion" rows="3" maxlength="500" placeholder="Describe el producto..."></textarea>
+          </mat-form-field>
+
+          <!-- Fila 3: Precio y Stock -->
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="half-width field-precio">
+              <mat-label>💰 Precio</mat-label>
+              <input matInput type="number" formControlName="precio" min="0.01" step="0.01" placeholder="0.00">
+              <span matPrefix>S/ &nbsp;</span>
+              <mat-error *ngIf="productForm.get('precio')?.hasError('required')">El precio es requerido</mat-error>
+              <mat-error *ngIf="productForm.get('precio')?.hasError('min')">El precio debe ser mayor a 0</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="half-width field-stock">
+              <mat-label>📦 Stock</mat-label>
+              <input matInput type="number" formControlName="stock" min="0" step="1" placeholder="Cantidad disponible">
+              <mat-error *ngIf="productForm.get('stock')?.hasError('required')">El stock es requerido</mat-error>
+              <mat-error *ngIf="productForm.get('stock')?.hasError('min')">El stock no puede ser negativo</mat-error>
+              <mat-error *ngIf="productForm.get('stock')?.hasError('pattern')">El stock debe ser un número entero</mat-error>
+            </mat-form-field>
+          </div>
+
+          <!-- Imagen
+          <div class="full-width image-upload">
+            <mat-label>🖼️ Imagen del Producto</mat-label>
+            <input type="file" accept="image/*" (change)="onImageSelected($event)" id="imageInput" hidden>
+            <button mat-stroked-button color="primary" type="button" (click)="openFileInput()">
+              <mat-icon>upload</mat-icon> Subir Imagen
+            </button>
+            <div *ngIf="imagePreview" class="image-preview">
+              <p class="preview-label">👀 Vista Previa:</p>
+              <img [src]="imagePreview" alt="Vista previa del producto" class="preview-image">
+            </div>
+          </div>-->
+
+          <!-- Botones -->
+          <div class="form-actions">
+            <button mat-button type="button" class="cancel-button" (click)="goToProductos()">❌ Cancelar</button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="!productForm.valid">✅ Actualizar</button>
+          </div>
+        </form>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

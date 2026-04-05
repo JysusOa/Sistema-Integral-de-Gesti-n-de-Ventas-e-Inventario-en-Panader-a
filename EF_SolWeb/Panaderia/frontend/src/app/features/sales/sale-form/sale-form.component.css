@@ -1,0 +1,795 @@
+/* Ajustes generales de tipografía y resets (mejorado con glassmorphism base) */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.6;
+  color: #5D4037;
+  background: linear-gradient(135deg, #FAF3E0 0%, #F5E8C7 100%);
+  min-height: 100vh;
+  animation: fadeInBody 0.8s ease-out; /* Acelerado de 1.2s a 0.8s */
+}
+
+@keyframes fadeInBody {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Contenedor principal (glassmorphism y glow tech) */
+.sale-form-container {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 32px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(255, 248, 220, 0.9) 0%, rgba(245, 222, 179, 0.8) 100%);
+  backdrop-filter: blur(15px); /* Glassmorphism */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    0 0 0 1px rgba(210, 105, 30, 0.1),
+    0 0 20px rgba(139, 69, 19, 0.1); /* Glow sutil */
+  font-family: 'Roboto', sans-serif;
+  overflow: hidden;
+  animation: slideUpFade 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Acelerado de 0.8s a 0.6s */
+  position: relative;
+}
+
+.sale-form-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(139, 69, 19, 0.1), transparent);
+  animation: shimmerBorder 2s ease-in-out infinite; /* Acelerado de 3s a 2s */
+}
+
+@keyframes slideUpFade {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.98);
+    filter: blur(1px); /* Blur reducido de implícito a 1px */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes shimmerBorder {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Título (glow neón y animación tech) */
+.sale-form-container mat-card-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: #5D4037;
+  margin-bottom: 35px;
+  text-align: center;
+  letter-spacing: 1px;
+  text-shadow: 0 0 10px rgba(139, 69, 19, 0.3), 0 2px 4px rgba(0, 0, 0, 0.15); /* Glow neón */
+  animation: titleEntrance 0.6s ease-out 0.2s both; /* Acelerado */
+  position: relative;
+}
+
+.sale-form-container mat-card-title::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, #D2691E, #F4A460);
+  border-radius: 2px;
+  animation: expandLine 0.6s ease-out 0.4s both; /* Acelerado */
+}
+
+@keyframes titleEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+    filter: blur(1px); /* Blur reducido */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes expandLine {
+  from {
+    width: 0;
+    opacity: 0;
+  }
+  to {
+    width: 80px;
+    opacity: 1;
+  }
+}
+
+/* Campos de formulario (glow en focus y hover tech) */
+.full-width, .half-width {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.half-width {
+  width: calc(50% - 12px);
+}
+
+mat-form-field {
+  font-size: 16px;
+  border-radius: 16px;
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  border: 1px solid rgba(210, 105, 30, 0.1);
+  animation: fieldAppear 0.4s ease-out; /* Acelerado de 0.6s a 0.4s */
+  position: relative;
+}
+
+@keyframes fieldAppear {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+    filter: blur(1px); /* Blur reducido */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline {
+  border: 2px solid transparent;
+  background: linear-gradient(to right, #F4A460, #D2691E);
+  border-radius: 16px;
+}
+
+.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline {
+  border-color: #D2691E;
+  box-shadow:
+    0 0 0 4px rgba(210, 105, 30, 0.3),
+    0 6px 20px rgba(210, 105, 30, 0.2),
+    0 0 15px rgba(139, 69, 19, 0.2); /* Glow neón */
+  animation: focusPulse 0.3s ease-out; /* Acelerado */
+}
+
+@keyframes focusPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(210, 105, 30, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(210, 105, 30, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 4px rgba(210, 105, 30, 0.3);
+  }
+}
+
+mat-form-field:hover .mat-form-field-outline {
+  box-shadow:
+    0 6px 20px rgba(210, 105, 30, 0.2),
+    0 0 10px rgba(139, 69, 19, 0.1); /* Glow sutil */
+  transform: translateY(-2px);
+}
+
+/* Opciones de autocomplete (hover tech) */
+.mat-option {
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  border-radius: 12px;
+  margin: 4px 0;
+  padding: 12px;
+  border: 1px solid transparent;
+}
+
+.mat-option:hover {
+  background: linear-gradient(90deg, rgba(210, 105, 30, 0.15), rgba(244, 164, 96, 0.15));
+  transform: translateX(4px);
+  border-left: 3px solid #D2691E;
+  box-shadow: 0 4px 12px rgba(210, 105, 30, 0.15), 0 0 5px rgba(139, 69, 19, 0.1); /* Glow */
+}
+
+.product-option-disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+mat-option mat-icon {
+  color: green;
+  margin-right: 8px;
+}
+
+/* Filas de productos (glassmorphism y animación tech) */
+.quick-add-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+  padding: 16px;
+  border-radius: 20px;
+  background: rgba(255, 253, 249, 0.9);
+  backdrop-filter: blur(10px); /* Glassmorphism */
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 0 10px rgba(139, 69, 19, 0.05); /* Glow sutil */
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  border: 1px solid rgba(210, 105, 30, 0.1);
+  animation: slideInLeft 0.4s ease-out; /* Acelerado de 0.6s a 0.4s */
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+    filter: blur(1px); /* Blur reducido */
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+    filter: blur(0);
+  }
+}
+
+.quick-add-row:hover {
+  box-shadow:
+    0 12px 32px rgba(210, 105, 30, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 0 15px rgba(139, 69, 19, 0.1); /* Glow */
+  transform: translateY(-4px);
+  border-color: rgba(210, 105, 30, 0.2);
+}
+
+/* Paneles secundarios (glassmorphism) */
+.second-row {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  padding: 16px;
+  border-radius: 16px;
+  background: linear-gradient(45deg, rgba(245, 222, 179, 0.9), rgba(255, 248, 220, 0.8));
+  backdrop-filter: blur(10px);
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    0 0 10px rgba(139, 69, 19, 0.05);
+  transition: all 0.3s ease;
+  border: 1px solid rgba(210, 105, 30, 0.1);
+  animation: slideInRight 0.4s ease-out 0.1s both; /* Acelerado */
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+    filter: blur(1px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+    filter: blur(0);
+  }
+}
+
+.document-row {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 12px;
+  padding: 16px;
+  border-left: 5px solid #D2691E;
+  border-radius: 0 20px 20px 0;
+  background: linear-gradient(to right, rgba(210, 105, 30, 0.1), rgba(244, 164, 96, 0.1));
+  backdrop-filter: blur(8px);
+  box-shadow:
+    0 4px 16px rgba(210, 105, 30, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    0 0 8px rgba(139, 69, 19, 0.05);
+  transition: all 0.3s ease;
+  border: 1px solid rgba(210, 105, 30, 0.08);
+  animation: documentSlide 0.3s ease-out 0.2s both; /* Acelerado */
+}
+
+@keyframes documentSlide {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+    filter: blur(1px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+    filter: blur(0);
+  }
+}
+
+/* Resumen de total (glassmorphism y glow) */
+.total-venta-summary {
+  margin-top: 20px;
+  padding: 24px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(253, 245, 230, 0.9), rgba(250, 243, 224, 0.8));
+  backdrop-filter: blur(12px);
+  box-shadow:
+    0 8px 32px rgba(222, 184, 135, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 0 15px rgba(139, 69, 19, 0.1);
+  text-align: right;
+  border: 1px solid rgba(210, 105, 30, 0.15);
+  animation: scaleIn 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s both; /* Acelerado */
+  position: relative;
+  overflow: hidden;
+}
+
+.total-venta-summary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  animation: shimmer 2s ease-in-out infinite; /* Acelerado */
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+    filter: blur(1px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* Botones de acción (glow tech y 3D) */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 24px;
+  margin-top: 45px;
+  animation: fadeInUp 0.4s ease-out 0.4s both; /* Acelerado */
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+    filter: blur(1px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+.form-actions button {
+  padding: 14px 32px;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #DEB887, #F4A460);
+  box-shadow:
+    0 6px 20px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    0 0 10px rgba(139, 69, 19, 0.1); /* Glow */
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  border: 1px solid rgba(210, 105, 30, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.form-actions button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.form-actions button:hover::before {
+  left: 100%;
+}
+
+.form-actions button:hover {
+  transform: translateY(-4px) rotateX(5deg); /* 3D tilt */
+  box-shadow:
+    0 12px 40px rgba(244, 164, 96, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    0 0 20px rgba(139, 69, 19, 0.2); /* Glow neón completado */
+  border-color: rgba(210, 105, 30, 0.3);
+}
+
+/* Errores (glow tech) */
+.mat-error {
+  color: #E57373;
+  font-size: 14px;
+  margin-top: -8px;
+  margin-bottom: 12px;
+  border-left: 4px solid #E57373;
+  border-radius: 8px;
+  padding: 6px 10px;
+  box-shadow:
+    0 2px 8px rgba(231, 115, 115, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 0 5px rgba(229, 115, 115, 0.1); /* Glow sutil */
+  background: rgba(229, 115, 115, 0.05);
+  border: 1px solid rgba(229, 115, 115, 0.1);
+  border-left-width: 4px;
+  animation: shakeError 0.3s ease-out; /* Acelerado */
+}
+
+@keyframes shakeError {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+/* =========================================== */
+/* AUTOCOMPLETE CON SCROLL COMPLETO (NUEVO) */
+/* =========================================== */
+
+/* Panel del autocomplete con scroll completo */
+::ng-deep .mat-autocomplete-panel {
+  max-height: 400px !important;
+  min-height: 200px !important;
+  overflow-y: auto !important;
+  border-radius: 16px !important;
+  margin-top: 8px !important;
+
+  /* Glassmorphism y Glow tech para el panel */
+  background: linear-gradient(135deg, rgba(255, 248, 220, 0.98) 0%, rgba(250, 243, 224, 0.95) 100%) !important;
+  backdrop-filter: blur(15px) !important;
+  border: 1px solid rgba(210, 105, 30, 0.2) !important;
+  box-shadow:
+    0 12px 32px rgba(139, 69, 19, 0.25),
+    0 4px 16px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 0 15px rgba(139, 69, 19, 0.1) !important;
+
+  /* Scrollbar personalizada tech */
+  scrollbar-width: thin !important;
+  scrollbar-color: #D2691E #FAF3E0 !important;
+
+  animation: autocompleteSlideDown 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+}
+
+@keyframes autocompleteSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+/* Scrollbar para Webkit (Chrome, Safari) */
+::ng-deep .mat-autocomplete-panel::-webkit-scrollbar {
+  width: 10px !important;
+  border-radius: 10px !important;
+}
+
+::ng-deep .mat-autocomplete-panel::-webkit-scrollbar-track {
+  background: linear-gradient(to bottom, #FAF3E0, #F5E8C7) !important;
+  border-radius: 10px !important;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1) !important;
+  border: 1px solid rgba(210, 105, 30, 0.1) !important;
+}
+
+::ng-deep .mat-autocomplete-panel::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #D2691E, #F4A460) !important;
+  border-radius: 10px !important;
+  border: 2px solid #FAF3E0 !important;
+  box-shadow:
+    0 0 8px rgba(210, 105, 30, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+  transition: all 0.3s ease !important;
+}
+
+::ng-deep .mat-autocomplete-panel::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #CD853F, #DEB887) !important;
+  box-shadow:
+    0 0 12px rgba(210, 105, 30, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+}
+
+/* Opciones del autocomplete - ajustadas para mejor visualización */
+::ng-deep .mat-option {
+  padding: 12px 16px !important;
+  min-height: 56px !important;
+  margin: 4px 8px !important;
+  border-radius: 12px !important;
+  border: 1px solid transparent !important;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+  background: transparent !important;
+
+  /* Efecto de vidrio para cada opción */
+  background: rgba(255, 255, 255, 0.7) !important;
+  backdrop-filter: blur(5px) !important;
+}
+
+/* Opción seleccionada */
+::ng-deep .mat-option.mat-active {
+  background: linear-gradient(90deg, rgba(210, 105, 30, 0.15), rgba(244, 164, 96, 0.15)) !important;
+  border-left: 4px solid #D2691E !important;
+  box-shadow:
+    0 4px 15px rgba(210, 105, 30, 0.2),
+    0 0 8px rgba(139, 69, 19, 0.1) !important;
+}
+
+/* Opción hover */
+::ng-deep .mat-option:hover:not(.mat-option-disabled) {
+  background: linear-gradient(90deg, rgba(210, 105, 30, 0.2), rgba(244, 164, 96, 0.2)) !important;
+  transform: translateX(5px) !important;
+  border-left: 4px solid #D2691E !important;
+  box-shadow:
+    0 6px 20px rgba(210, 105, 30, 0.25),
+    0 0 10px rgba(139, 69, 19, 0.15) !important;
+}
+
+/* Opción deshabilitada (sin stock) */
+::ng-deep .product-option-disabled {
+  opacity: 0.6 !important;
+  position: relative !important;
+}
+
+::ng-deep .product-option-disabled::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    rgba(229, 115, 115, 0.1) 10px,
+    rgba(229, 115, 115, 0.1) 20px
+  ) !important;
+  pointer-events: none;
+  border-radius: 10px;
+}
+
+/* Contenido de las opciones de producto */
+::ng-deep .product-option {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  width: 100% !important;
+}
+
+::ng-deep .product-name {
+  flex: 1 !important;
+  font-weight: 600 !important;
+  color: #5D4037 !important;
+  font-size: 14px !important;
+}
+
+::ng-deep .product-details {
+  font-size: 12px !important;
+  color: #8D6E63 !important;
+  opacity: 0.8 !important;
+  margin-left: auto !important;
+  margin-right: 12px !important;
+}
+
+::ng-deep .stock-indicator {
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  padding: 4px 8px !important;
+  border-radius: 12px !important;
+  min-width: 70px !important;
+  text-align: center !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1) !important;
+}
+
+::ng-deep .stock-indicator:not(.no-stock):not(.low-stock) {
+  background: linear-gradient(to right, rgba(76, 175, 80, 0.15), rgba(76, 175, 80, 0.1)) !important;
+  color: #2E7D32 !important;
+  border: 1px solid rgba(76, 175, 80, 0.3) !important;
+}
+
+::ng-deep .low-stock {
+  background: linear-gradient(to right, rgba(255, 152, 0, 0.15), rgba(255, 152, 0, 0.1)) !important;
+  color: #EF6C00 !important;
+  border: 1px solid rgba(255, 152, 0, 0.3) !important;
+  animation: pulseLowStock 2s infinite !important;
+}
+
+@keyframes pulseLowStock {
+  0%, 100% {
+    box-shadow: 0 2px 6px rgba(255, 152, 0, 0.2) !important;
+  }
+  50% {
+    box-shadow: 0 2px 10px rgba(255, 152, 0, 0.4) !important;
+  }
+}
+
+::ng-deep .no-stock {
+  background: linear-gradient(to right, rgba(244, 67, 54, 0.15), rgba(244, 67, 54, 0.1)) !important;
+  color: #D32F2F !important;
+  border: 1px solid rgba(244, 67, 54, 0.3) !important;
+}
+
+::ng-deep .check-icon {
+  color: #388E3C !important;
+  font-size: 18px !important;
+  width: 18px !important;
+  height: 18px !important;
+  margin-right: 4px !important;
+  animation: checkPulse 1.5s infinite !important;
+}
+
+@keyframes checkPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+/* Contador de productos encontrados (estilo para el panel) */
+::ng-deep .mat-autocomplete-panel::before {
+  content: attr(data-product-count);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: linear-gradient(to bottom, #D2691E, #F4A460) !important;
+  color: white !important;
+  padding: 8px 16px !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  text-align: center !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 16px 16px 0 0 !important;
+  backdrop-filter: blur(10px) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Para pantallas pequeñas, ajusta la altura del panel */
+@media (max-width: 768px) {
+  ::ng-deep .mat-autocomplete-panel {
+    max-height: 300px !important;
+    min-height: 150px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  ::ng-deep .mat-autocomplete-panel {
+    max-height: 250px !important;
+    min-height: 120px !important;
+  }
+
+  ::ng-deep .product-option {
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+  }
+
+  ::ng-deep .product-details {
+    margin-left: 0 !important;
+    order: 3 !important;
+    width: 100% !important;
+  }
+}
+
+/* Media queries para responsividad (mejoradas para tech) */
+@media (max-width: 1024px) {
+  .sale-form-container {
+    max-width: 100%;
+    padding: 28px;
+  }
+  .second-row {
+    flex-direction: column;
+    gap: 20px;
+  }
+  .quick-add-row {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .form-actions {
+    flex-direction: column;
+    gap: 15px;
+  }
+  .form-actions button {
+    width: 100%;
+    padding: 12px 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sale-form-container {
+    padding: 24px;
+  }
+  .sale-form-container mat-card-title {
+    font-size: 28px;
+    margin-bottom: 25px;
+  }
+  .second-row {
+    padding: 12px;
+  }
+  .document-row {
+    padding: 12px;
+  }
+  .total-venta-summary {
+    padding: 18px;
+    text-align: center;
+  }
+  .quick-add-row {
+    padding: 12px;
+    gap: 10px;
+  }
+  .form-actions button {
+    font-size: 16px;
+    padding: 10px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sale-form-container {
+    padding: 16px;
+  }
+  .half-width {
+    width: 100%;
+  }
+  .quick-add-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .second-row {
+    gap: 12px;
+  }
+}

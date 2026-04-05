@@ -1,0 +1,42 @@
+<div class="login-container">
+
+  <div *ngIf="isCheckingSession" class="loading-overlay">
+    <mat-spinner diameter="60" color="accent"></mat-spinner>
+  </div>
+
+  <mat-card class="login-card" *ngIf="!isCheckingSession">
+    <div class="login-header">
+      <img src="assets/imagen/logo.png" alt="Logo Pan Francisco" class="logo">
+      <mat-card-title class="login-title">Bienvenido</mat-card-title>
+      <p class="welcome-text">Panadería </p>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()" class="login-form">
+
+      <mat-form-field appearance="outline">
+        <mat-label>Correo Electrónico</mat-label>
+        <input matInput formControlName="correo" type="email" placeholder="ejemplo@correo.com">
+        <mat-icon matSuffix>email</mat-icon>
+        <mat-error *ngIf="loginForm.get('correo')?.hasError('required')">El correo es requerido</mat-error>
+        <mat-error *ngIf="loginForm.get('correo')?.hasError('email')">Correo inválido</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Contraseña</mat-label>
+        <input matInput formControlName="clave" type="password" placeholder="••••••••">
+        <mat-icon matSuffix>lock</mat-icon>
+        <mat-error *ngIf="loginForm.get('clave')?.hasError('required')">La contraseña es requerida</mat-error>
+      </mat-form-field>
+
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div>
+
+      <button mat-raised-button type="submit" [disabled]="!loginForm.valid || isLoading" class="submit-btn full-width">
+        <span *ngIf="!isLoading">Iniciar Sesión</span>
+        <mat-spinner *ngIf="isLoading" [diameter]="24" color="accent"></mat-spinner>
+      </button>
+
+    </form>
+  </mat-card>
+</div>

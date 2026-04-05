@@ -1,0 +1,13 @@
+# Dependencias de Node
+node_modules/
+
+# Configuración local de VS Code
+.vscode/
+
+# Archivos de entorno sensibles (si tienes alguno como .env)
+.env
+
+# Archivos de logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

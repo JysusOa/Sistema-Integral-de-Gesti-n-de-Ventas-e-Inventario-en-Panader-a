@@ -1,0 +1,389 @@
+/* Importar fuente premium */
+/* <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;900&display=swap" rel="stylesheet"> */
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+mat-toolbar {
+  height: 130px; /* AUMENTADO: De 90px a 130px para más presencia */
+  display: flex;
+  align-items: center;
+  background: linear-gradient(135deg, #6B4C3B, #8B5E3C, #A67C52);
+  color: #FFD700;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+  padding: 0 30px; /* AUMENTADO: Un poco más de espacio a los lados */
+  border-bottom: 3px solid rgba(255, 215, 0, 0.5); /* Borde un poco más grueso */
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  animation: fadeInUp 0.8s ease-out;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+mat-toolbar:hover {
+  background: linear-gradient(135deg, #8B5E3C, #A67C52, #6B4C3B);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 215, 0, 0.2);
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ======================== */
+/* Logo y título premium */
+/* ======================== */
+.app-title {
+  color: #FFD700;
+  font-family: 'Poppins', sans-serif;
+  font-size: 42px; /* AUMENTADO: De 34px a 42px */
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  letter-spacing: 1.5px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4), 0 0 10px rgba(255, 215, 0, 0.3);
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+  flex-shrink: 0;
+}
+
+.app-title:hover {
+  color: #FFF8DC;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4), 0 0 15px rgba(255, 215, 0, 0.5);
+}
+
+.logo-img {
+  width: 100px;  /* AUMENTADO: De 72px a 100px */
+  height: 100px; /* AUMENTADO: De 72px a 100px */
+  margin-right: 20px;
+  border-radius: 20px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+  animation: pulse 2s infinite;
+  flex-shrink: 0;
+}
+
+.logo-img:hover {
+  transform: rotate(-3deg) scale(1.1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35), 0 0 15px rgba(255, 215, 0, 0.4);
+  filter: brightness(1.1);
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* ======================== */
+/* Links y botones de navegación premium (CORREGIDO) */
+/* ======================== */
+.nav-button {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+
+  /* CORRECCIÓN DE ALTURA: Forzamos altura suficiente para el icono de 45px */
+  height: 65px !important;
+  line-height: normal !important; /* Evita que el texto se corte arriba/abajo */
+
+  /* CORRECCIÓN DE ANCHO: Más espacio a los lados y límite más amplio */
+  padding: 0 25px !important;
+  max-width: 200px; /* Aumentado de 160px a 200px */
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  font-size: 19px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  margin: 0 5px;
+  border-radius: 12px; /* Para que el efecto hover se vea redondeado y no corte esquinas */
+}
+
+.nav-icon {
+  width: 45px;  /* AUMENTADO: De 35px a 45px */
+  height: 45px; /* AUMENTADO: De 35px a 45px */
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.active-link {
+  border-bottom: 4px solid #FFD700; /* Borde más grueso */
+  font-weight: 700;
+  transition: border-color 0.3s ease, transform 0.2s ease;
+  animation: slideIn 0.5s ease-out;
+}
+
+.active-link:hover {
+  transform: translateY(-2px);
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-10px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* ======================== */
+/* Ajuste del nombre de usuario */
+/* ======================== */
+mat-toolbar button[mat-button] {
+  font-family: 'Poppins', sans-serif;
+  font-size: 20px; /* AUMENTADO: De 18px a 20px */
+  font-weight: 600;
+  color: white !important;
+  max-width: 220px; /* AUMENTADO */
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+}
+/* Icono dentro del botón de usuario */
+mat-toolbar button[mat-button] mat-icon {
+  font-size: 28px; /* AUMENTADO */
+  width: 28px;
+  height: 28px;
+  margin-right: 8px;
+}
+
+mat-toolbar a[mat-button]::after,
+mat-toolbar button[mat-button]::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(255, 215, 0, 0.15);
+  transition: width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  z-index: -1;
+  border-radius: 8px;
+}
+
+mat-toolbar a[mat-button]:hover::after,
+mat-toolbar button[mat-button]:hover::after {
+  width: 100%;
+}
+
+mat-toolbar a[mat-button]:hover,
+mat-toolbar button[mat-button]:hover {
+  color: #FFF8DC !important;
+  transform: scale(1.07);
+  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+}
+
+/* ======================== */
+/* Fondo premium elegante */
+/* ======================== */
+body {
+  background: linear-gradient(to bottom right, #FAF3E0, #FFEBD1, #F5E6C3);
+  margin: 0;
+  font-family: 'Poppins', 'Roboto', sans-serif;
+  color: #4B3621;
+  transition: background 0.5s ease;
+  line-height: 1.6;
+}
+
+/* ======================== */
+/* Estilos generales Dashboard (Sin cambios mayores) */
+/* ======================== */
+mat-card {
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  animation: fadeIn 0.6s ease-out;
+}
+
+mat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18), 0 0 10px rgba(255, 215, 0, 0.2);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+mat-form-field {
+  width: 280px;
+  transition: all 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+}
+
+mat-form-field.mat-focused .mat-form-field-outline {
+  border-color: #FFD700;
+  border-width: 2px;
+  box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+}
+
+.mat-input-element {
+  font-size: 16px;
+  padding: 10px;
+  transition: color 0.3s ease;
+}
+
+.mat-input-element:focus {
+  color: #6B4C3B;
+}
+
+table.sale-table {
+  width: 100%;
+  border-spacing: 0;
+  border-collapse: collapse;
+  font-family: 'Poppins', sans-serif;
+}
+
+th.mat-header-cell {
+  background-color: rgba(139, 69, 19, 0.15);
+  color: #4B3621;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 12px;
+  transition: background-color 0.3s ease;
+}
+
+th.mat-header-cell:hover {
+  background-color: rgba(139, 69, 19, 0.25);
+}
+
+td.mat-cell {
+  padding: 12px 8px;
+  transition: background-color 0.2s ease;
+}
+
+.mat-row:hover {
+  background-color: rgba(255, 215, 0, 0.1);
+  transform: scale(1.01);
+}
+
+mat-paginator {
+  margin-top: 12px;
+  font-weight: 500;
+  font-family: 'Poppins', sans-serif;
+}
+
+mat-paginator .mat-button {
+  color: #6B4C3B !important;
+  transition: color 0.3s ease;
+}
+
+mat-paginator .mat-button:hover {
+  color: #A67C52 !important;
+}
+
+/* ======================== */
+/* Responsividad Ajustada */
+/* ======================== */
+@media (max-width: 1024px) { /* Tablets */
+  mat-toolbar {
+    padding: 0 20px;
+    height: 100px; /* Un poco más bajo en tablets */
+  }
+  .app-title {
+    font-size: 30px;
+  }
+  .nav-button {
+    max-width: 110px;
+    font-size: 15px;
+    margin: 0 2px;
+  }
+  .nav-icon {
+    width: 35px;
+    height: 35px;
+  }
+}
+
+@media (max-width: 768px) { /* Móviles */
+  mat-toolbar {
+    height: auto; /* Altura automática para que quepan verticalmente */
+    min-height: 80px;
+    padding: 10px;
+    flex-direction: column;
+    align-items: center; /* Centrado en móviles */
+    justify-content: center;
+  }
+  .spacer {
+    display: none;
+  }
+  .app-title {
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
+  .logo-img {
+    width: 60px;
+    height: 60px;
+    margin-right: 10px;
+  }
+  .nav-button {
+    max-width: none;
+    width: 100%; /* Ancho completo en móvil */
+    font-size: 16px;
+    margin: 5px 0;
+    justify-content: center;
+  }
+  /* Mostrar iconos pequeños en móvil también si se desea, o mantener ocultos */
+  .nav-icon {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+  }
+  mat-toolbar button[mat-button] {
+    font-size: 16px;
+    margin-top: 10px;
+  }
+}
+/* ======================== */
+/* Notificaciones de Stock  */
+/* ======================== */
+
+/* Contenedor para posicionar iconos sobre la imagen */
+.icon-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Burbuja de alerta */
+/* Burbuja de alerta base */
+.status-badge {
+  position: absolute;
+  top: -8px;
+  right: -5px; /* Ajustamos para que esté bien a la derecha */
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  z-index: 10;
+  animation: pulse-alert 2s infinite;
+  display: flex; /* Centrar el icono dentro del círculo */
+  align-items: center;
+  justify-content: center;
+}
+
+/* Colores */
+.badge-error {
+  color: #D32F2F;
+  border: 2px solid #D32F2F;
+  z-index: 20; /* El rojo siempre encima si se solapan */
+}
+
+.badge-warning {
+  color: #FFC107;
+  border: 2px solid #FFC107;
+}
+
+/* ⭐ NUEVA CLASE: Si hay error rojo, movemos el amarillo a la izquierda */
+.badge-offset {
+  right: 18px; /* Lo empujamos a la izquierda para que se vean los dos */
+  z-index: 15;
+  animation-delay: 0.5s; /* Que palpiten desincronizados para llamar más la atención */
+}
+
+@keyframes pulse-alert {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}

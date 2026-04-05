@@ -1,0 +1,177 @@
+/* =========================================
+   CONTAINER & LAYOUT
+   ========================================= */
+.checklist-container {
+  min-width: 480px;
+  max-width: 550px;
+  background-color: #FAFAFA;
+  overflow: hidden;
+}
+
+/* =========================================
+   HEADER PREMIUM
+   ========================================= */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* Gradiente elegante */
+  background: linear-gradient(135deg, #3E2723 0%, #5D4037 60%, #8D6E63 100%);
+  color: white;
+  padding: 25px 30px;
+  margin: -24px -24px 20px -24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  position: relative;
+  z-index: 1;
+}
+
+.header::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1h2v2H1V1zm4 0h2v2H5V1zm4 0h2v2H9V1z' fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+  opacity: 0.3;
+}
+
+.product-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  z-index: 2;
+  flex: 1; /* Ocupa el espacio disponible a la izquierda */
+}
+
+/* ⭐ NUEVO: Contenedor derecho para Logo e Imagen */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 15px; /* Espacio entre el logo y la foto */
+  z-index: 2;
+}
+
+/* ⭐ NUEVO: Estilo del Logo */
+.company-logo {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); /* Sombra para que resalte sobre el fondo oscuro */
+  opacity: 0.95;
+}
+
+h2[mat-dialog-title] {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  letter-spacing: 0.5px;
+  color: #FFD700;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.subtitle {
+  margin: 0;
+  color: #EFEBE9;
+  font-size: 0.95rem;
+  font-weight: 300;
+}
+
+.stock-badge {
+  background: rgba(255, 215, 0, 0.2);
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: inline-block;
+  width: fit-content;
+  margin-top: 5px;
+  border: 1px solid rgba(255, 215, 0, 0.4); /* Valor por defecto */
+}
+
+.product-thumb {
+  width: 75px;
+  height: 75px;
+  border-radius: 12px;
+  border: 3px solid white;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+  object-fit: cover;
+  background: white;
+  transition: transform 0.3s ease;
+}
+
+.product-thumb:hover {
+  transform: scale(1.05) rotate(2deg);
+}
+
+/* =========================================
+   CHECKLIST
+   ========================================= */
+.check-list-section {
+  background: transparent;
+  padding: 10px 5px;
+  margin-bottom: 25px;
+}
+
+.check-list-section h3 {
+  color: #5D4037;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 700;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #E0E0E0;
+  padding-bottom: 8px;
+}
+
+.check-item {
+  background: white;
+  margin-bottom: 10px;
+  padding: 8px 15px;
+  border-radius: 8px;
+  border: 1px solid #EEEEEE;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+}
+
+.check-item:hover {
+  transform: translateX(4px);
+  border-color: #FFD700;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+/* Checkbox Material Ajustes */
+::ng-deep .mat-checkbox-layout { white-space: normal !important; }
+::ng-deep .mat-checkbox-inner-container { margin-right: 12px !important; }
+
+/* =========================================
+   FORMULARIO
+   ========================================= */
+.form-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+}
+
+.full-width { width: 100%; }
+mat-form-field { font-size: 0.95rem; }
+
+/* =========================================
+   FOOTER
+   ========================================= */
+mat-dialog-actions {
+  padding: 20px 0 0 0;
+  margin-bottom: -10px;
+}
+
+button[mat-raised-button] {
+  padding: 0 24px;
+  height: 42px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 12px rgba(62, 39, 35, 0.3);
+}

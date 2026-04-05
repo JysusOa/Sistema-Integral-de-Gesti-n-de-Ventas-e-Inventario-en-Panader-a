@@ -1,0 +1,253 @@
+:root {
+  --color-primary: #6B4C3B;
+  --color-secondary: #8B5E3C;
+  --color-tertiary: #A67C52;
+  --color-accent: #FFD700;
+  --color-background: #FAF3E0;
+  --color-text-dark: #2C1E16;
+  --color-error: #B22222;
+
+  --shadow-strong: 0 20px 50px rgba(107, 76, 59, 0.25);
+  --border-radius-xl: 32px;
+  --transition-smooth: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  color: var(--color-text-dark);
+  background-color: var(--color-background);
+  background-image: url('/assets/imagen/fondo.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+body::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(4px);
+  z-index: -1;
+}
+
+/* --- OVERLAY DE CARGA INICIAL --- */
+.loading-overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+/* --- CONTENEDOR PRINCIPAL --- */
+.login-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background: url('/assets/imagen/fondo.png') no-repeat center center;
+  background-size: cover;
+  z-index: 0;
+}
+
+.login-container::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: -1;
+}
+
+/* --- TARJETA DE LOGIN --- */
+.login-card {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  padding: 60px 50px;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(20px);
+  border-radius: var(--border-radius-xl);
+  box-shadow: var(--shadow-strong);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  text-align: center;
+}
+
+/* --- HEADER Y LOGO --- */
+.login-header {
+  margin-bottom: 35px;
+}
+
+.logo {
+  width: 130px;
+  height: 130px;
+  margin-bottom: 20px;
+  filter: drop-shadow(0 10px 15px rgba(107, 76, 59, 0.3));
+  transition: transform var(--transition-smooth);
+}
+
+.logo:hover { transform: scale(1.08) rotate(3deg); }
+
+.login-title {
+  font-size: 2.6em;
+  font-weight: 800;
+  margin: 0;
+  color: var(--color-primary);
+  text-shadow: 0px 1px 2px rgba(0,0,0,0.1);
+  letter-spacing: -0.5px;
+}
+
+.welcome-text {
+  font-size: 1.2em;
+  color: var(--color-secondary);
+  font-weight: 600;
+  margin: 8px 0 0;
+}
+
+/* --- FORMULARIO --- */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 10px;
+}
+
+/* Ajustes de Angular Material */
+::ng-deep .mat-form-field { width: 100%; }
+
+::ng-deep .mat-form-field-outline {
+  background: #FFFFFF;
+  border-radius: 14px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+::ng-deep .mat-input-element {
+  color: #000000 !important;
+  font-weight: 600 !important;
+  font-size: 1.1em !important;
+}
+
+::ng-deep .mat-form-field-label {
+  color: #6B4C3B !important;
+  font-weight: 500 !important;
+}
+
+::ng-deep .mat-icon {
+  color: var(--color-tertiary);
+}
+
+/* --- BOTÓN DE INICIAR SESIÓN - CORRECCIÓN COMPLETA --- */
+button.submit-btn {
+  height: 60px;
+  font-size: 1.3em;
+  font-weight: 700;
+  border-radius: 14px;
+  margin-top: 15px;
+  box-shadow: 0 6px 20px rgba(107, 76, 59, 0.3);
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+
+  /* COLOR DEL TEXTO - FORZADO MÁS ESPECÍFICO */
+  color: #FFFFFF !important;
+
+  /* IMPORTANTE: Eliminar cualquier transparencia de Angular */
+  background-color: #6B4C3B !important;
+  background-image: linear-gradient(135deg, var(--color-primary), var(--color-secondary)) !important;
+  border: none !important;
+
+  /* Forzar el color del span/texto dentro del botón */
+  --mdc-text-button-label-text-color: #FFFFFF !important;
+}
+
+/* Forzar el color del texto del span dentro del botón */
+::ng-deep button.submit-btn .mdc-button__label {
+  color: #FFFFFF !important;
+}
+
+/* Estado Hover (Mouse encima) */
+button.submit-btn:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(107, 76, 59, 0.45);
+  background-color: #8B5E3C !important;
+  background-image: linear-gradient(135deg, var(--color-secondary), var(--color-tertiary)) !important;
+}
+
+/* Estado Disabled (Formulario vacío/inválido) */
+button.submit-btn:disabled {
+  opacity: 0.7 !important;
+  background-color: #D7CCC8 !important;
+  background-image: none !important;
+  color: #5D4037 !important; /* Texto más oscuro */
+  cursor: not-allowed !important;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
+  border: 1px solid #BCAAA4 !important;
+}
+
+/* Forzar color del texto cuando está disabled */
+button.submit-btn:disabled .mdc-button__label {
+  color: #5D4037 !important;
+}
+
+::ng-deep button.submit-btn:disabled .mdc-button__label {
+  color: #5D4037 !important;
+}
+
+/* --- SPINNER DENTRO DEL BOTÓN --- */
+::ng-deep button.submit-btn .mat-spinner circle {
+  stroke: #FFFFFF !important;
+}
+
+::ng-deep button.submit-btn:disabled .mat-spinner circle {
+  stroke: #5D4037 !important;
+}
+
+/* --- EFECTO DE PULSACIÓN AL HACER CLIC --- */
+button.submit-btn:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow: 0 3px 10px rgba(107, 76, 59, 0.3);
+}
+
+/* --- MENSAJES DE ERROR --- */
+.error-message {
+  color: #D32F2F;
+  background: #FFEBEE;
+  border: 1px solid #FFCDD2;
+  padding: 14px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.95em;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+/* Responsividad */
+@media (max-width: 600px) {
+  .login-card {
+    max-width: 90%;
+    padding: 40px 30px;
+  }
+  .login-title { font-size: 2em; }
+  .logo { width: 100px; height: 100px; }
+
+  button.submit-btn {
+    height: 55px;
+    font-size: 1.2em;
+  }
+}

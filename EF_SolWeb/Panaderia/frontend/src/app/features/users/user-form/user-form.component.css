@@ -1,0 +1,223 @@
+
+/* Contenedor principal del formulario */
+.user-form-container { /* Renombrado de .sale-form-container a .user-form-container */
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 28px; /* Ligeramente más padding */
+  border-radius: 12px; /* Bordes más suaves */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Sombra más profunda para el contenedor principal */
+  background-color: #FAF3E0;
+  font-family: 'Roboto', sans-serif; /* Tipografía general */
+}
+
+/* Título principal del formulario */
+.user-form-container__title { /* Renombrado de .sale-form-container mat-card-title */
+  font-family: 'Montserrat', sans-serif; /* Una fuente más distintiva para títulos */
+  font-size: 32px; /* Tamaño de letra más grande */
+  font-weight: 700; /* Más negrita */
+  color: #5D4037; /* Color café oscuro */
+  margin-bottom: 30px; /* Más espacio debajo del título */
+  text-align: center;
+  letter-spacing: 0.5px; /* Ligero espaciado entre letras */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05); /* Sombra de texto sutil */
+}
+
+/* Estilo general para los campos de formulario */
+.full-width {
+  width: 100%;
+  margin-bottom: 18px; /* Ligeramente más espacio entre campos */
+}
+
+.half-width { /* Mantener por si se usa en el futuro, aunque no se usa directamente aquí */
+  width: calc(50% - 10px); /* Ajuste de espacio para dos campos */
+  margin-bottom: 18px; /* Mantener el margin-bottom para espaciar verticalmente */
+}
+
+/* Estilos para mat-form-field (inputs y selects) */
+mat-form-field {
+  transition: all 0.3s ease-in-out; /* Animación al enfocar */
+  font-size: 16px; /* Tamaño de letra para inputs */
+}
+
+mat-form-field:focus-within {
+  box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.2); /* Sombra de enfoque con color de panadería */
+  border-radius: 4px; /* Asegurar que la sombra no se corte */
+}
+
+/* Ajuste de bordes de mat-form-field outline */
+.mat-form-field-appearance-outline .mat-form-field-outline {
+  border-color: #A1887F; /* Color de borde existente */
+  transition: border-color 0.3s ease;
+}
+
+.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+  border-color: #8B4513; /* Color de borde más oscuro al enfocar */
+}
+
+/* Estilos para mat-select */
+mat-select {
+  font-size: 16px;
+}
+
+/* Diseño de cuadrícula para la información general */
+.general-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px; /* Más espacio entre las columnas */
+  margin-bottom: 30px;
+}
+
+/* Estilos para la columna izquierda (Datos Personales) */
+.column-left {
+  display: flex;
+  flex-direction: column;
+  padding: 25px; /* Más padding interno */
+  border: 2px solid #D2B48C;
+  border-radius: 12px; /* Bordes más suaves */
+  background-color: #FFF8DC;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.18); /* Sombra más profunda */
+  transition: all 0.3s ease-in-out;
+}
+
+.column-left:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25); /* Sombra más intensa al pasar el ratón */
+  transform: translateY(-4px); /* Levantamiento más pronunciado */
+}
+
+/* Estilos para la columna derecha (Seguridad y Acceso) */
+.column-right {
+  display: flex;
+  flex-direction: column;
+  padding: 25px; /* Más padding interno */
+  border-radius: 12px; /* Bordes más suaves */
+  border: 2px solid #D2B48C; /* Añadir borde y fondo para que coincida con la izquierda */
+  background-color: #FFF8DC;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.18);
+  transition: all 0.3s ease-in-out;
+}
+
+.column-right:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  transform: translateY(-4px);
+}
+
+/* Estilos para el encabezado de los paneles (columnas) */
+.panel-header__title { /* Renombrado de .panel-header mat-card-title */
+  font-family: 'Montserrat', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 15px 0; /* Ajustar margen inferior */
+  color: #7e574b;
+  display: flex;
+  align-items: center;
+}
+
+.panel-header__title .header-icon { /* Renombrado de .panel-header .header-icon */
+  margin-right: 10px;
+  color: #8B4513;
+  font-size: 28px;
+}
+
+/* Acciones del formulario (botones) */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px; /* Más espacio entre botones */
+  margin-top: 40px; /* Más espacio superior */
+}
+
+.form-actions button {
+  padding: 12px 28px; /* Más padding para botones */
+  font-size: 17px; /* Tamaño de letra ligeramente más grande */
+  font-weight: 500;
+  border-radius: 8px; /* Bordes más suaves */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease-in-out;
+}
+
+.form-actions button[color="primary"] { /* Usar color="primary" en lugar de type="submit" */
+  background-color: #8B4513; /* Color principal de panadería */
+  color: white;
+  border-color: #a5551c;
+}
+
+.form-actions button[color="primary"]:hover:not([disabled]) {
+  background-color: #864717; /* Tono más oscuro al pasar el ratón */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.form-actions button[color="warn"] {
+  border-color: #D32F2F;
+  color: #D32F2F;
+  background-color: transparent; /* Asegurarse de que sea transparente */
+}
+
+.form-actions button[color="warn"]:hover:not([disabled]) {
+  background-color: rgba(211, 47, 47, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-actions button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+/* Estilo para el spinner de carga */
+.user-form__spinner {
+  margin-left: 8px; /* Ajustar margen para el spinner */
+  color: currentColor; /* Hereda el color del texto del botón */
+}
+
+/* Estilos para MatSnackBar (asegurarse de que estén definidos) */
+.snackbar-success {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.snackbar-error {
+  background-color: #EF5350;
+  color: white;
+}
+
+/* Media queries para responsividad */
+@media (max-width: 768px) {
+  .general-info-grid {
+    grid-template-columns: 1fr;
+    gap: 20px; /* Reducir gap en móvil */
+  }
+  .user-form-container {
+    padding: 20px; /* Reducir padding general en móvil */
+  }
+  .user-form-container__title {
+    font-size: 26px; /* Reducir tamaño de título en móvil */
+    margin-bottom: 20px;
+  }
+  .column-left, .column-right {
+    padding: 18px; /* Reducir padding en móvil */
+    margin-bottom: 16px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Sombra para ambas columnas apiladas */
+    transform: none; /* Eliminar levantamiento en móvil */
+  }
+  .column-left:hover, .column-right:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Mantener sombra en hover en móvil */
+    transform: none;
+  }
+  .panel-header__title {
+    font-size: 18px;
+  }
+  .panel-header__title .header-icon {
+    font-size: 24px;
+  }
+  .form-actions {
+    flex-direction: column; /* Apilar botones en móvil */
+    gap: 10px;
+  }
+  .form-actions button {
+    width: 100%;
+    padding: 10px;
+  }
+}

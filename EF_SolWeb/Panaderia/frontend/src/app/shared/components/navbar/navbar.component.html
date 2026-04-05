@@ -1,0 +1,70 @@
+<mat-toolbar color="primary" class="mat-elevation-z4">
+  <span>
+    <a routerLink="/" class="app-title">
+      <img src="assets/imagen/logo.png"
+           alt="Logo Pan Francisco - Panadería artesanal"
+           class="logo-img">
+    </a>
+  </span>
+
+  <span class="spacer"></span>
+
+  <ng-container *ngIf="isLoggedIn">
+
+    <a mat-button routerLink="/productos" routerLinkActive="active-link" class="nav-button">
+      <div class="icon-wrapper">
+        <img src="assets/imagen/productos.png" alt="Ícono de productos" class="nav-icon">
+
+        <mat-icon *ngIf="hasNoStock" class="status-badge badge-error" title="¡Atención! Hay productos Agotados">error</mat-icon>
+        <mat-icon *ngIf="hasLowStock" class="status-badge badge-warning" [class.badge-offset]="hasNoStock" title="Advertencia: Pocas unidades">warning</mat-icon>
+      </div>
+      Inventario
+    </a>
+
+    <a mat-button *ngIf="isJefeCalidad || isAdmin" routerLink="/informes" routerLinkActive="active-link" class="nav-button">
+      <img src="assets/imagen/informe.png"
+           onerror="this.src='assets/imagen/dashboard.png'"
+           alt="Ícono Informes"
+           class="nav-icon">
+      Informes
+    </a>
+
+    <a mat-button *ngIf="!isJefeCalidad" routerLink="/ventas" routerLinkActive="active-link" class="nav-button">
+      <img src="assets/imagen/boleta.png" alt="Ícono de ventas" class="nav-icon"> Ventas
+    </a>
+
+    <a mat-button *ngIf="isAdmin" routerLink="/usuarios" routerLinkActive="active-link" class="nav-button">
+      <img src="assets/imagen/usuario.png" alt="Ícono de usuarios" class="nav-icon"> Usuarios
+    </a>
+
+    <a mat-button *ngIf="isAdmin" routerLink="/dashboard" routerLinkActive="active-link" class="nav-button">
+      <img src="assets/imagen/dashboard.png" alt="Ícono de dashboard" class="nav-icon"> Dashboard
+    </a>
+
+    <a mat-button *ngIf="!isJefeCalidad" routerLink="/catalogo" routerLinkActive="active-link" class="nav-button">
+      <img src="assets/imagen/catálogo.png" alt="Ícono de catálogo" class="nav-icon"> Catálogo
+    </a>
+
+  </ng-container>
+
+  <span class="spacer"></span>
+
+  <ng-container *ngIf="isLoggedIn; else loginButton">
+    <button mat-button [matMenuTriggerFor]="userMenu" class="nav-button">
+      <img [src]="getUserAvatar()" alt="Avatar de usuario" class="nav-icon">
+      {{ currentUser?.nombre || 'Usuario' }}
+    </button>
+
+    <mat-menu #userMenu="matMenu">
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>logout</mat-icon> Cerrar Sesión
+      </button>
+    </mat-menu>
+  </ng-container>
+
+  <ng-template #loginButton>
+    <a mat-raised-button color="accent" routerLink="/login">
+      <mat-icon>login</mat-icon> Iniciar Sesión
+    </a>
+  </ng-template>
+</mat-toolbar>
